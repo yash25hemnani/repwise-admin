@@ -2,6 +2,7 @@ import { createInterface } from 'node:readline/promises';
 import { FieldValue } from 'firebase-admin/firestore';
 import { db } from '../src/firebase.js';
 import { cloudinary } from '../src/cloudinary.js';
+import { searchTokens } from '../src/search.js';
 
 // Moving the pin is a deliberate change (D-32)
 const SHA = 'f00c92c7dcf1216a928a52c3706c7ce8e2f71ed5';
@@ -46,6 +47,7 @@ function toDoc(ex) {
 
   return {
     name: ex.name,
+    searchTokens: searchTokens(ex.name),
     source: 'free-exercise-db',
     muscleGroupId: MUSCLE_GROUP[target],
     targetMuscleId: target,
