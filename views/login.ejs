@@ -33,7 +33,7 @@
         Sign in with Google
       </button>
 
-      <p id="message" class="message" role="alert" hidden></p>
+      <p id="message" class="message" role="alert" <%= error ? '' : 'hidden' %>><%= error || '' %></p>
     </div>
   </main>
 </body>

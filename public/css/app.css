@@ -197,3 +197,44 @@ body {
     animation: none;
   }
 }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-mark {
+  margin-right: auto;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.topbar-email {
+  color: var(--text-2);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button-small {
+  width: auto;
+  padding: 7px 12px;
+  font-size: 14px;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.page .lede {
+  margin: 0;
+  text-align: left;
+}
