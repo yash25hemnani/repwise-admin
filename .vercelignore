@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+*service-account*.json
+serviceAccountKey.json
+*firebase-adminsdk*.json
+.planning
+.claude
+.vscode
+docs
+scripts

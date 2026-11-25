@@ -1,6 +1,7 @@
 import { auth } from './firebase.js';
 
-const production = process.env.NODE_ENV === 'production';
+// Vercel serves every deployment over https, previews included
+const production = process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 
 export const cookieOptions = {
   httpOnly: true,

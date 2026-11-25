@@ -12,8 +12,8 @@ Repwise Admin is the web admin panel for Repwise, a public Android gym app (Flut
 
 - **Tech stack**: Node.js 24, Express 5 (ESM), EJS templates with plain hand-written CSS, `firebase-admin`, Cloudinary SDK — server-rendered and no build step, as decided for the Repwise backend
 - **Auth**: Firebase sign-in on the login page, then the server verifies the ID token, requires an `admin: true` custom claim and issues a Firebase session cookie. A small local script grants or revokes the claim — Firestore rules and the server can both read it
-- **Hosting**: Render free tier, deployed from GitHub. It sleeps when idle, so the first request after a while is slow; acceptable for an admin tool. Long jobs like the seed run locally as a CLI script, not on Render
-- **Secrets**: the Firebase service account, Cloudinary secret and session secret live in `.env` locally and in Render's environment, never in git. The repo may be public
+- **Hosting**: Vercel, deployed from GitHub. The Express app runs as one Vercel Function (`src/server.js` exports `app`), `public/` is served from Vercel's CDN, and `vercel.json` bundles `views/`. Long jobs like the seed run locally as a CLI script, not on Vercel
+- **Secrets**: the Firebase service account, Cloudinary secret and session secret live in `.env` locally and in Vercel's environment variables, never in git. The repo may be public
 - **Data safety**: no hard deletes of exercises. The seed is idempotent (re-running it must not create duplicates)
 - **Shared conventions**: commit messages are one line with a `feat:`/`chore:`/`docs:` prefix and no Co-Authored-By trailer. Comments are short, with no divider comments
 
