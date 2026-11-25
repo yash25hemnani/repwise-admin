@@ -55,7 +55,8 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Admin can upload a GIF for an exercise, and it is stored on Cloudinary and replaces the seed stills on that exercise
   4. Admin can archive an exercise, which hides it from the app but keeps its record, and can unarchive it; no screen offers a hard delete
   5. Admin can add, rename and remove muscle groups, target muscles and equipment; a renamed entry shows its new name on the exercises that use it, and removing one still in use is blocked with a clear message
-**Plans**: TBD
+**Plans**:
+- [ ] 03-01-PLAN.md — Exercise list, search, Load more and read-only detail
 **UI hint**: yes
 
 ## Progress
