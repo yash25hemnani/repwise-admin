@@ -13,17 +13,17 @@ The admin can get hundreds of accurate, well-illustrated exercises into Firestor
 ### Validated
 
 - ✓ Express 5 (ESM) server scaffold that starts and answers `GET /` — existing
+- ✓ Only admins can sign in (ADMN-01) — Phase 1
+- ✓ Admin can run a one-time import that seeds the library from free-exercise-db (ADMN-06) — Phase 2
 
 ### Active
 
-- [ ] Only admins can sign in (ADMN-01)
 - [ ] Admin can list, search and filter exercises (ADMN-02)
 - [ ] Admin can create and edit an exercise: name, muscle group, target muscle, equipment, guide, notes (ADMN-03)
 - [ ] Admin can upload an exercise GIF, stored on Cloudinary (ADMN-04)
 - [ ] Admin can archive an exercise, hiding it from the app without breaking plans or history (ADMN-05)
-- [ ] Admin can run a one-time import that seeds the library from free-exercise-db (ADMN-06)
 - [ ] Admin can manage the lists of muscle groups, target muscles and equipment (ADMN-07)
-- [ ] The panel is deployed on Render and reachable from anywhere
+- [ ] The panel is deployed on Vercel and reachable from anywhere
 
 ### Out of Scope
 
@@ -45,8 +45,8 @@ The admin can get hundreds of accurate, well-illustrated exercises into Firestor
 
 - **Tech stack**: Node.js 24, Express 5 (ESM), EJS templates with plain hand-written CSS, `firebase-admin`, Cloudinary SDK — server-rendered and no build step, as decided for the Repwise backend
 - **Auth**: Firebase sign-in on the login page, then the server verifies the ID token, requires an `admin: true` custom claim and issues a Firebase session cookie. A small local script grants or revokes the claim — Firestore rules and the server can both read it
-- **Hosting**: Render free tier, deployed from GitHub. It sleeps when idle, so the first request after a while is slow; acceptable for an admin tool. Long jobs like the seed run locally as a CLI script, not on Render
-- **Secrets**: the Firebase service account, Cloudinary secret and session secret live in `.env` locally and in Render's environment, never in git. The repo may be public
+- **Hosting**: Vercel, deployed from GitHub. The Express app runs as one Vercel Function (`src/server.js` exports `app`), `public/` is served from Vercel's CDN, and `vercel.json` bundles `views/`. Long jobs like the seed run locally as a CLI script, not on Vercel
+- **Secrets**: the Firebase service account, Cloudinary secret and session secret live in `.env` locally and in Vercel's environment variables, never in git. The repo may be public
 - **Data safety**: no hard deletes of exercises. The seed is idempotent (re-running it must not create duplicates)
 - **Shared conventions**: commit messages are one line with a `feat:`/`chore:`/`docs:` prefix and no Co-Authored-By trailer. Comments are short, with no divider comments
 
@@ -57,7 +57,7 @@ The admin can get hundreds of accurate, well-illustrated exercises into Firestor
 | Separate project `repwise-admin` next to the app repo | Keeps Node and Flutter tooling apart; it deploys on its own | — Pending |
 | Seed from free-exercise-db with its JPG stills uploaded to Cloudinary | Public domain, about 800 exercises; stills now, real GIFs added by the admin over time | — Pending |
 | Firebase sign-in + `admin` custom claim + session cookie | Same accounts as the app; the claim is visible to the server and the Firestore rules | — Pending |
-| Host on Render free tier | No billing needed; cold starts are fine for an admin panel | — Pending |
+| Host on Vercel (was Render free tier) | User's choice, 2026-11-25. Express runs zero-config as a Vercel Function | — Pending |
 | EJS + plain CSS | Simple templates, no build step | — Pending |
 | AI proxy deferred to v2 | v1 is the exercise library; the protein tracker comes later | — Pending |
 

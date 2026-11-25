@@ -1,18 +1,19 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 1
-current_phase_name: Admin Sign-In Slice
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-11-25T07:28:44.800Z"
+current_phase: 3
+current_phase_name: Library Curation
+status: executing
+stopped_at: 03-01 Task 2 checkpoint (list and search)
+last_updated: "2026-11-25T14:00:00.000Z"
 last_activity: 2026-11-25
-last_activity_desc: Roadmap created (3 phases, 14/14 v1 requirements mapped)
+last_activity_desc: Exercise list built, hosting moved to Vercel, finished plans marked complete
+state_head: bd6da86
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 4
+  completed_plans: 3
+  percent: 50
 ---
 
 # Project State
@@ -22,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-25)
 
 **Core value:** The admin can get hundreds of accurate, well-illustrated exercises into Firestore and keep them correct, without touching the database by hand.
-**Current focus:** Phase 1 - Admin Sign-In Slice
+**Current focus:** Phase 3 - Library Curation (exercise list first, at the user's request)
 
 ## Current Position
 
-Phase: 1 of 3 (Admin Sign-In Slice)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-11-25 — Roadmap created (3 phases, 14/14 v1 requirements mapped)
+Phase: 3 (Library Curation) — EXECUTING
+Plan: 03-01 (exercise list), waiting at Task 2 (list and search check)
+Status: 01-01, 01-02 and 02-01 complete. Still open: home counts + rules deploy, the Vercel deploy, 02-02
+Last activity: 2026-11-25 — Exercise list built, hosting moved from Render to Vercel
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█████░░░░░] 50% (7 of 14 v1 requirements)
 
 ## Performance Metrics
 
@@ -59,13 +60,17 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Roadmap]: Vertical slices. Phase 1 is the thinnest end-to-end slice (sign-in, claim, session cookie, claim script, Firestore-backed page, live on Render)
+- [Roadmap]: Vertical slices. Phase 1 is the thinnest end-to-end slice (sign-in, claim, session cookie, claim script, Firestore-backed page, live on Vercel)
+- [2026-11-25]: Hosting moved from Render to Vercel (user). Express runs as a Vercel Function; vercel.json bundles views/
+- [2026-11-25]: Search and pagination follow shelf_snap: searchTokens + array-contains, load more by raising the limit
+- [2026-11-25]: The exercise list (03-01) goes ahead of the home counts (02-02), at the user's request
 - [Roadmap]: DATA-01 and DATA-02 land in Phase 1 because the app's library screens build against the contract and rules
 - [Roadmap]: Seed (Phase 2) comes before the curation UI (Phase 3); the seed creates the list entries, the UI manages them afterwards
 
 ### Pending Todos
 
-None yet.
+- Run `npm run search-tokens -- --write` (the user runs it; it needs .env)
+- Create the Vercel project, add the env vars and add the Vercel domain to Firebase Auth's authorized domains
 
 ### Blockers/Concerns
 
@@ -83,6 +88,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-11-25T07:28:44.697Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-admin-sign-in-slice/01-CONTEXT.md
+Last session: 2026-11-25
+Stopped at: 03-01 Task 2 checkpoint (list and search)
+Resume file: .planning/phases/03-library-curation/03-01-PLAN.md

@@ -9,9 +9,9 @@ ADMN-01 to ADMN-07 share their IDs with `../repwise/.planning/REQUIREMENTS.md`, 
 
 ### Admin access
 
-- [ ] **ADMN-01**: Only accounts with the `admin` claim can sign in to the panel. Anyone else gets a clear "not an admin" message
-- [ ] **ACC-01**: The owner can grant or revoke admin for an email by running a local script
-- [ ] **ACC-02**: An admin stays signed in between visits (session cookie) and can sign out from any page
+- [x] **ADMN-01**: Only accounts with the `admin` claim can sign in to the panel. Anyone else gets a clear "not an admin" message
+- [x] **ACC-01**: The owner can grant or revoke admin for an email by running a local script
+- [x] **ACC-02**: An admin stays signed in between visits (session cookie) and can sign out from any page
 
 ### Library management
 
@@ -23,18 +23,18 @@ ADMN-01 to ADMN-07 share their IDs with `../repwise/.planning/REQUIREMENTS.md`, 
 
 ### Seed import
 
-- [ ] **ADMN-06**: Admin can run a one-time CLI import that seeds about 800 exercises from free-exercise-db, with both stills uploaded to Cloudinary
-- [ ] **SEED-01**: Re-running the import creates no duplicates and does not overwrite exercises the admin has edited
-- [ ] **SEED-02**: The import maps the dataset's muscles and equipment onto the panel's lists, creating the list entries
+- [x] **ADMN-06**: Admin can run a one-time CLI import that seeds about 800 exercises from free-exercise-db, with both stills uploaded to Cloudinary
+- [x] **SEED-01**: Re-running the import creates no duplicates and does not overwrite exercises the admin has edited
+- [x] **SEED-02**: The import maps the dataset's muscles and equipment onto the panel's lists, creating the list entries
 
 ### Shared data contract
 
-- [ ] **DATA-01**: The exercise and list schema is written up in one doc that the app repo builds against
+- [x] **DATA-01**: The exercise and list schema is written up in one doc that the app repo builds against
 - [ ] **DATA-02**: The app's Firestore rules let signed-in, verified users read the library and lists, and never write them (deployed from `../repwise`)
 
 ### Deploy
 
-- [ ] **DEPL-01**: The panel runs on Render, deployed from GitHub, with every secret in Render's environment and none in git
+- [ ] **DEPL-01**: The panel runs on Vercel, deployed from GitHub, with every secret in Vercel's environment variables and none in git
 
 ## v2 Requirements
 
@@ -54,18 +54,18 @@ ADMN-01 to ADMN-07 share their IDs with `../repwise/.planning/REQUIREMENTS.md`, 
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ADMN-01 | Phase 1 | Pending |
-| ACC-01 | Phase 1 | Pending |
-| ACC-02 | Phase 1 | Pending |
+| ADMN-01 | Phase 1 | Complete |
+| ACC-01 | Phase 1 | Complete |
+| ACC-02 | Phase 1 | Complete |
 | ADMN-02 | Phase 3 | Pending |
 | ADMN-03 | Phase 3 | Pending |
 | ADMN-04 | Phase 3 | Pending |
 | ADMN-05 | Phase 3 | Pending |
 | ADMN-07 | Phase 3 | Pending |
-| ADMN-06 | Phase 2 | Pending |
-| SEED-01 | Phase 2 | Pending |
-| SEED-02 | Phase 2 | Pending |
-| DATA-01 | Phase 1 | Pending |
+| ADMN-06 | Phase 2 | Complete |
+| SEED-01 | Phase 2 | Complete |
+| SEED-02 | Phase 2 | Complete |
+| DATA-01 | Phase 1 | Complete |
 | DATA-02 | Phase 1 | Pending |
 | DEPL-01 | Phase 1 | Pending |
 

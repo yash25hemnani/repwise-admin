@@ -2,7 +2,7 @@
 
 ## Overview
 
-Repwise Admin is where the app's whole exercise library is created and kept correct. The journey starts with the thinnest end-to-end slice: an admin signs in with Firebase, the server checks the `admin` claim and issues a session cookie, and a page reads real data from Firestore, all live on Render. That same phase locks the shared data contract and the app-side Firestore rules, because the app's library screens (built in `../repwise`) depend on them. Next, a local CLI seeds about 800 exercises from free-exercise-db into the lists and schema the contract defines. Finally, the curation UI lets the admin browse, edit, illustrate, archive and manage the lists, without touching the database by hand.
+Repwise Admin is where the app's whole exercise library is created and kept correct. The journey starts with the thinnest end-to-end slice: an admin signs in with Firebase, the server checks the `admin` claim and issues a session cookie, and a page reads real data from Firestore, all live on Vercel. That same phase locks the shared data contract and the app-side Firestore rules, because the app's library screens (built in `../repwise`) depend on them. Next, a local CLI seeds about 800 exercises from free-exercise-db into the lists and schema the contract defines. Finally, the curation UI lets the admin browse, edit, illustrate, archive and manage the lists, without touching the database by hand.
 
 ## Phases
 
@@ -12,7 +12,7 @@ Repwise Admin is where the app's whole exercise library is created and kept corr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Admin Sign-In Slice** - Firebase sign-in, admin claim, session cookie and a Firestore-backed page live on Render, plus the shared data contract and app rules
+- [ ] **Phase 1: Admin Sign-In Slice** - Firebase sign-in, admin claim, session cookie and a Firestore-backed page live on Vercel, plus the shared data contract and app rules
 - [ ] **Phase 2: Library Seed** - One-time local CLI import of about 800 exercises from free-exercise-db into Firestore and Cloudinary
 - [ ] **Phase 3: Library Curation** - List, search, filter, edit, GIF upload, archive and list management in the panel
 
@@ -26,10 +26,14 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Success Criteria** (what must be TRUE):
   1. Running the local claim script with an email grants that account the `admin` claim, and running it again in revoke mode removes it
   2. A signed-in account without the claim is refused with a clear "not an admin" message and cannot open any panel page
-  3. An admin signs in on the public Render URL (deployed from GitHub, every secret in Render's environment, none in git) and lands on a page showing live exercise and list counts read from Firestore
+  3. An admin signs in on the public Vercel URL (deployed from GitHub, every secret in Vercel's environment variables, none in git) and lands on a page showing live exercise and list counts read from Firestore
   4. The admin is still signed in after closing and reopening the browser, and can sign out from any page, after which panel pages send them back to login
   5. One contract doc defines the exercise and list schema, and the app's Firestore rules let signed-in, verified users read the library and lists but reject any client write
-**Plans**: TBD
+**Plans**:
+- [x] 01-01-PLAN.md — Sign-in, login page and session cookie
+- [x] 01-02-PLAN.md — Admin route guard and sign-out
+- [ ] Home counts and the Firestore rules deploy (also Phase 2's criterion 4)
+- [ ] Vercel deploy (DEPL-01). The deploy files are in place; it needs the Vercel project and env vars
 **UI hint**: yes
 
 ### Phase 2: Library Seed
@@ -42,7 +46,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The muscle group, target muscle and equipment lists exist after the import, built from the dataset's values, and every imported exercise points at entries that exist in them
   3. Running the import a second time creates no duplicates and does not overwrite an exercise that was changed after the first run
   4. The Phase 1 home page now shows about 800 exercises and the new list counts
-**Plans**: TBD
+**Plans**:
+- [x] 02-01-PLAN.md — Data contract and seed import (876 exercises)
+- [ ] 02-02 — Home counts
 
 ### Phase 3: Library Curation
 **Goal:** As the admin, I want to find, edit, illustrate and archive exercises and manage the lists, so that the library stays accurate.
@@ -66,6 +72,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Admin Sign-In Slice | 0/TBD | Not started | - |
-| 2. Library Seed | 0/TBD | Not started | - |
-| 3. Library Curation | 0/TBD | Not started | - |
+| 1. Admin Sign-In Slice | 2/4 | In progress | - |
+| 2. Library Seed | 1/2 | In progress | - |
+| 3. Library Curation | 0/1 | In progress | - |
