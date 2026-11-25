@@ -139,6 +139,7 @@ async function main() {
   const found = await existing(exercises.map((ex) => `exercises/${ex.id}`));
   const toAdd = exercises.filter((ex) => !found.has(`exercises/${ex.id}`));
   const edited = exercises.filter((ex) => found.get(`exercises/${ex.id}`)?.editedAt).length;
+  const unedited = exercises.length - toAdd.length - edited;
 
   // Only list docs that an exercise added in this run needs (D-29)
   const needed = new Map();
@@ -148,16 +149,34 @@ async function main() {
   const count = (prefix) => [...missing].filter((p) => p.startsWith(prefix)).length;
 
   console.log(`${exercises.length} exercises in the dataset`);
-  console.log(`Add ${toAdd.length}, skip ${exercises.length - toAdd.length - edited} existing, skip ${edited} edited`);
+  console.log(`Add ${toAdd.length}, skip ${unedited} existing, skip ${edited} edited`);
   console.log(`Create ${count('muscleGroups/')} muscle groups, ${count('targetMuscles/')} target muscles, ${count('equipment/')} equipment`);
 
   if (dryRun) return console.log('Dry run, nothing written');
   if (!toAdd.length) return console.log('Nothing to add');
   if (!(await confirm(`Write to ${PROJECT}? (y/N) `))) return console.log('Nothing written');
 
-  for (const ex of toAdd) {
-    await addExercise(ex, docs.get(ex.id), missing);
-    console.log(`Added ${ex.id}`);
+  // 4 workers share one queue. A failure writes no doc and the run carries on
+  const queue = [...toAdd];
+  const failed = [];
+  let done = 0;
+  async function worker() {
+    for (let ex; (ex = queue.shift()); ) {
+      try {
+        await addExercise(ex, docs.get(ex.id), missing);
+      } catch (err) {
+        failed.push(ex.id);
+        console.error(`${ex.id}: ${err.message}`);
+      }
+      console.log(`${++done}/${toAdd.length} ${ex.id}`);
+    }
+  }
+  await Promise.all(Array.from({ length: 4 }, worker));
+
+  console.log(`Added ${toAdd.length - failed.length}, skipped ${unedited} existing, skipped ${edited} edited, failed ${failed.length}`);
+  if (failed.length) {
+    console.log(`Failed: ${failed.join(', ')}`);
+    process.exitCode = 1;
   }
 }
 
