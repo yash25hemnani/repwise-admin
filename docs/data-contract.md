@@ -39,6 +39,7 @@ media: {
 - Stills are our own copies in Cloudinary, public IDs `repwise/exercises/{datasetId}/0` and `/1` (D-31).
 - An imported exercise has both stills or none. The 3 dataset exercises without stills have `stills: []` and show a placeholder (D-26).
 - `gif` becomes `{ publicId, url, width, height }` when Phase 3 uploads one.
+- Until then, the app plays the two stills as a flip, 1 second per frame. The panel's preview uses the same rate. With reduced motion, both show as stills.
 
 ### Image URLs
 
