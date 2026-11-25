@@ -12,13 +12,13 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(authRoutes);
+app.use('/admin', authRoutes);
 
-// Placeholder until the home page exists
+// Public, no sign-in needed
 app.get('/', (req, res) => {
-  res.send('Repwise admin is running');
+  res.render('home');
 });
 
 app.listen(port, () => {
-  console.log(`Repwise admin on http://localhost:${port}`);
+  console.log(`Repwise admin running on http://localhost:${port}`);
 });

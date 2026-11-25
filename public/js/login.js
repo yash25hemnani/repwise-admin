@@ -38,7 +38,7 @@ function showMessage(text) {
 
 async function createSession(credential) {
   const idToken = await credential.user.getIdToken();
-  const res = await fetch('/session', {
+  const res = await fetch('/admin/session', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ idToken }),
@@ -54,7 +54,7 @@ async function run(signIn) {
   setBusy(true);
   try {
     await createSession(await signIn());
-    location.assign('/');
+    location.assign('/admin');
   } catch (err) {
     await signOut(auth);
     if (!quietCodes.has(err.code)) {
