@@ -10,13 +10,7 @@
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-  <header class="topbar">
-    <span class="topbar-mark">repwise</span>
-    <span class="topbar-email"><%= admin.email %></span>
-    <form method="post" action="/admin/logout">
-      <button type="submit" class="button button-small">Sign out</button>
-    </form>
-  </header>
+  <%- include('partials/topbar', { tab: null }) %>
   <main class="page">
     <p class="lede">Library counts come next.</p>
   </main>

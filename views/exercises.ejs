@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= selected ? selected.name + ' · ' : '' %>Exercises · Repwise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,900&family=DM+Sans:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="admin<%= selected || notFound ? ' has-detail' : '' %>">
+  <%- include('partials/topbar', { tab: 'exercises' }) %>
+  <main class="workspace">
+    <h1 class="page-title">Exercises</h1>
+
+    <form class="search" method="get" action="/admin/exercises" role="search">
+      <label class="visually-hidden" for="q">Search by name</label>
+      <input id="q" name="q" type="search" value="<%= q %>" placeholder="Search by name" autocomplete="off">
+    </form>
+
+    <div class="split">
+      <section class="list-panel" aria-label="Exercise list">
+        <% if (error) { %>
+          <p class="list-message"><%= error %></p>
+        <% } else if (!rows.length) { %>
+          <p class="list-message">
+            <% if (q) { %>No exercises match "<%= q %>". Clear the filters, or add it as a new exercise.<% } else { %>No exercises yet.<% } %>
+          </p>
+        <% } else { %>
+          <ul class="rows">
+            <% rows.forEach((row, i) => { %>
+              <li id="row-<%= i %>">
+                <a class="row" href="/admin/exercises/<%= encodeURIComponent(row.id) %><%= keep %>"<% if (selected && selected.id === row.id) { %> aria-current="true"<% } %>>
+                  <span class="thumb">
+                    <% if (row.thumbs.length) { %>
+                      <% row.thumbs.forEach((src, f) => { %><img class="frame-<%= f %>" src="<%= src %>" alt="" width="48" height="48" loading="lazy"><% }) %>
+                    <% } %>
+                    <% if (row.hasGif) { %><span class="gif-mark">GIF</span><% } %>
+                  </span>
+                  <span class="row-name"><%= row.name %></span>
+                  <span class="row-group"><%= row.group %></span>
+                  <span class="status status-<%= row.status %>"><%= row.status[0].toUpperCase() + row.status.slice(1) %></span>
+                </a>
+              </li>
+            <% }) %>
+          </ul>
+          <% if (hasMore) { %>
+            <a class="load-more" href="<%= base %><%= more %>">Load more</a>
+          <% } %>
+        <% } %>
+      </section>
+
+      <% if (selected || notFound) { %>
+        <section class="detail-panel" aria-label="Exercise details">
+          <a class="back" href="/admin/exercises<%= keep %>">Back to list</a>
+          <% if (notFound) { %>
+            <p class="list-message">No exercise with that ID.</p>
+          <% } else { %>
+            <h2 class="detail-name"><%= selected.name %></h2>
+          <% } %>
+        </section>
+      <% } %>
+    </div>
+  </main>
+</body>
+</html>

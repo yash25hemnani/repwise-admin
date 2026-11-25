@@ -1,0 +1,10 @@
+<header class="topbar">
+  <a class="topbar-mark" href="/admin">repwise</a>
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="/admin/exercises"<% if (tab === 'exercises') { %> aria-current="page"<% } %>>Exercises</a>
+  </nav>
+  <span class="topbar-email"><%= admin.email %></span>
+  <form method="post" action="/admin/logout">
+    <button type="submit" class="button button-small">Sign out</button>
+  </form>
+</header>
