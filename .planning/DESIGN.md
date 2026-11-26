@@ -1,93 +1,90 @@
 # Design: Repwise Admin
 
-**Defined:** 2026-11-25
+**Defined:** 2026-11-25 (revised from the user's dark dashboard reference)
 **Audience:** the app's owner and other admins, at a desktop, working through a library of about 800 exercises
 **Main job:** find an exercise, check it against what users will see, fix it, and move on. Most of the work is turning imported seed data into reviewed data.
 
 ## Direction
 
-The panel uses the app's own brand: the "gym chalk" light palette, the black-and-mint dark palette and DM Sans. Admins see each exercise the way users will see it in the app. The visual risk goes into one place, the exercise stills. Everything else stays quiet and dense.
+Pure black, dark only. A sidebar on the left, split from the page by a grey line. The list sits in a grey-outlined card, and an exercise opens in a mint-edged dialog over it. Mint means action, violet means "you are here". The visual risk still goes into one place, the exercise stills.
 
 ## Color
 
-Tokens are copied from `../repwise/lib/core/theme/app_colors.dart`, so the two products match. The panel follows the system light or dark setting.
+Dark only, no light mode and no theme toggle. Every surface is `#000000`; boxes are told apart by grey lines, never by grey fills.
 
-| Token | Light (chalk) | Dark | Use |
-|-------|---------------|------|-----|
-| `--bg` | `#F4F5F3` | `#000000` | Page |
-| `--surface` | `#E6E8E5` | `#1C1C1F` | Filter column, media panel, table row hover. Surfaces are filled, not shadowed |
-| `--border` | `#D5D8D4` | `#2A2A2E` | Inputs and table rules |
-| `--text` | `#000000` | `#FFFFFF` | Body and titles. Pure black, as in the app |
-| `--text-2` | `#5C6066` | `#A1A1A8` | Hints, counts and column headers |
-| `--green` | `#0A7A4B` | `#5DF0A6` | Primary buttons, links, the "Edited" status |
-| `--yellow` | `#F9C356` | `#F9C356` | The "Imported" status (needs review) |
-| `--red` | `#C7362F` | `#E5534B` | Archive and errors |
+| Token | Value | Use |
+|-------|-------|-----|
+| `--bg`, `--panel`, `--tile` | `#000000` | Page, cards, dialog, inputs, tiles |
+| `--line` | `#2A2A2E` | The sidebar edge and every box outline |
+| `--text` | `#FFFFFF` | Text |
+| `--text-2` | `#9BA0A8` | Hints, counts, labels, sidebar items |
+| `--accent` / `--neon` | `#5DF0A6` | Primary buttons, the active sidebar item, the dialog border. Text on it is black |
+| `--violet` | `#8B53FE` | Focus outline, the focused search box, hover (14%) and the open row (30%) |
+| `--red` | `#E5534B` | Archive and errors |
 
-The status colors come from the app's accent set, which is a nod to colored bumper plates. They only ever mean status. They are never decoration.
+Mint and red come from `../repwise/lib/core/theme/app_colors.dart`. Violet is the admin's own secondary. Small text never sits on violet (white on it is 4.4:1).
 
 ## Type
 
-- **Archivo**, condensed (`wdth` 75) at weight 800, for page titles and the login wordmark only. Its narrow, heavy letters look like gym wall signage.
-- **DM Sans** for everything else, matching the app. Counts use tabular figures (`font-variant-numeric: tabular-nums`).
-- **Scale** (ratio 1.25, base 15px): 12 / 15 / 19 / 24 / 30 / 37. Body line-height is 1.5 and titles 1.1.
+- **Archivo**, weight 900, wide (`font-stretch: 125%`), for the wordmark only. Page titles use DM Sans 500, like the sidebar.
+- **DM Sans** for everything else. Big figures use weight 300 with tabular numbers (`font-variant-numeric: tabular-nums`), large and thin. Body text is 400 and labels 500.
+- **Scale** (ratio 1.25, base 15px): 12 / 15 / 19 / 24 / 30 / 37, plus 48 for the big figures. Body line-height is 1.5 and titles 1.1.
 - **Case:** sentence case everywhere. No all-caps labels and no monospace.
 
 ## Shape
 
-- 6px radius on inputs, buttons and chips. 10px on media frames, so the images read as the largest objects on the page.
-- No drop shadows. A raised element is shown with the `--surface` fill.
-- Visible focus: a 2px `--green` outline with a 2px offset on every control.
+- The radius depends on how much an element holds: 28px on cards and the dialog, 16px on tiles and thumbnails, fully rounded pills on chips, inputs and buttons.
+- No drop shadows and no grey fills. Boxes are set apart by a 1px `--line` outline; only the dialog gets a mint border.
+- The open row becomes a violet pill.
+- Visible focus: a 2px `--violet` outline with a 2px offset on every control. In the sidebar, use `--accent`.
+- No status pills. The list and dialog don't show imported/edited/archived.
 
 ## The memorable element: the stills flip
 
 Seeded exercises have two JPG stills, and the app plays them as a 2-frame flip.
 
-- **List:** a 56px thumbnail on each row shows frame 1 and switches to frame 2 while the row is hovered or focused. This motion only happens in response to the user.
-- **Edit page:** both frames sit side by side at full size, like a contact sheet, with a preview that plays the flip exactly as the app will. Once a GIF is uploaded, it takes their place.
+- **List:** a 48px rounded thumbnail on each row shows frame 1. It switches to frame 2 while the row is hovered, focused or selected. This motion only happens in response to the user.
+- **Detail panel:** both frames side by side, with a preview that plays the flip exactly as the app will. Once a GIF is uploaded, it takes their place.
 - A small "GIF" marker on a thumbnail shows which exercises already have real animation.
-- With `prefers-reduced-motion`, nothing flips; both frames stay visible as stills.
+- With `prefers-reduced-motion`, nothing flips. Both frames stay visible as stills.
 
 ## Layout
 
-Left-aligned throughout. The panel has a top bar with two sections (Exercises, Lists) and no sidebar, because there are only two places to go.
+Left-aligned. A black sidebar with a grey right edge holds the wordmark, the pages (Overview, Exercises, and Lists once it exists) with the current one as a mint pill, and "Sign out" at the bottom. The page sits flush beside it, with no panel around it. A top bar holds the page title and the account's initial and email. Below 860px the sidebar slides out from a menu button in the top bar.
 
-**Exercise list**
+The wireframe below predates the all-black restyle; the progress panel and statuses are dropped for now.
 
-```
-Repwise admin      Exercises   Lists                     Sign out
-------------------------------------------------------------------
-Exercises                                          [New exercise]
-[Search by name                          ]
-[yellow======================|green=========|grey=]
- 612 imported   187 edited   13 archived       <- segments are status filters
-+---------------+  +-------------------------------------------------+
-| Muscle group  |  | [img] Barbell squat   Legs   Quadriceps  Barbell |
-|  Legs     142 |  | [img] Bench press     Chest  Pectorals   Barbell |
-|  Chest     96 |  | [img] Goblet squat    Legs   Quadriceps  Kettle..|
-| Target muscle |  |  ...                                             |
-| Equipment     |  |                                                  |
-+---------------+  +-------------------------------------------------+
-```
-
-The status bar replaces a dashboard of number cards. It shows curation progress and also works as the status filter, so it does a job instead of decorating the page.
-
-**Edit exercise**
+**Exercises**
 
 ```
-Exercises / Barbell squat
-Barbell squat                                  Imported, not reviewed
-+------------- media panel -------------+   Name           [        ]
-| [ frame 1 ]          [ frame 2 ]      |   Muscle group   [Legs   v]
-| Plays as a 2-frame flip in the app    |   Target muscle  [Quads  v]
-| until you upload a GIF.               |   Equipment      [Barbell v]
-| [Upload GIF]                          |   Guide          [        ]
-+---------------------------------------+   Notes          [        ]
-                                            [Save changes]    Archive
+repwise   | Exercises                         (moon)  (A) you@...
+Overview  |                                       (+ New exercise)
+Exercises |
+Sign out  |  (sidebar runs the full height; the panels below sit beside it)
++-- dark panel -------------------------------------------------------+
+|  612 imported        187 edited          13 archived                |
+|  [yellow==========]  [mint=====]         [grey=]                    |
++---------------------------------------------------------------------+
+Filters  (Muscle group v) (Target v) (Equipment v)  (Search by name   )
++-- chalk panel ---------------+ +-- dark panel ----------------------+
+| [img] Barbell squat   Legs   | |  Barbell squat         Imported    |
+|(#[img] Bench press  Chest  #)| |  [frame 1] [frame 2]  flip preview |
+| [img] Goblet squat    Legs   | |  [Group] [Target] [Equipment] tiles|
+|  ...                         | |  Guide, notes                      |
+|                              | |  Archive           (Save changes)  |
++------------------------------+ +------------------------------------+
 ```
 
-Below about 900px, both pages stack into one column. The filter column becomes a "Filters" disclosure above the list.
+- The progress panel replaces stat cards. Each count sits over its own bar segment in its status color, and clicking a segment filters the list to that status.
+- The list panel holds name, muscle group and status. The detail panel is the edit form, so editing happens without leaving the list.
+- Opening an exercise updates the URL (`/admin/exercises/:id`), so a reload or a shared link keeps the selection.
+- Below about 1000px, the detail panel becomes a full page and the list keeps the whole width. Below about 600px, the filters fold into a "Filters" disclosure.
 
-**Login:** the condensed "Repwise admin" wordmark large on the left, with Google sign-in and the email form below it. No illustration.
+**Lists:** the same frame. The chalk panel holds the muscle groups, target muscles and equipment, with each entry's count. The detail panel renames the selected entry, or blocks its removal while exercises still use it.
+
+**Admin home (Phase 1):** the progress panel on its own, showing exercise and list counts. Zeros before the seed are expected.
+
+**Login:** the wide "repwise" wordmark centered over a dark panel holding the Google button and the email form. No illustration.
 
 ## Copy
 
@@ -102,4 +99,4 @@ Each action keeps the same name from button to confirmation.
 
 ## Avoid
 
-Card grids, stat cards, gradients, shadows, all-caps eyebrows, monospace data labels, and `→` on buttons.
+Identical stat-card grids, gradients, shadows, all-caps eyebrows, monospace data labels, `→` on buttons, and using the accent for anything but the main action, progress and focus.
