@@ -8,7 +8,8 @@
     "dev": "nodemon --watch src --exec \"node --env-file-if-exists=.env\" src/server.js",
     "admin": "node --env-file-if-exists=.env scripts/admin.js",
     "seed": "node --env-file-if-exists=.env scripts/seed.js",
-    "search-tokens": "node --env-file-if-exists=.env scripts/search-tokens.js"
+    "search-tokens": "node --env-file-if-exists=.env scripts/search-tokens.js",
+    "warm-stills": "node --env-file-if-exists=.env scripts/warm-stills.js"
   },
   "keywords": [],
   "author": "",

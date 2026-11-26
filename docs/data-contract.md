@@ -49,7 +49,9 @@ media: {
 https://res.cloudinary.com/{cloud}/image/upload/{transform}/{publicId}
 ```
 
-e.g. `.../image/upload/w_400,c_fill,f_auto,q_auto/repwise/exercises/Barbell_Full_Squat/0`.
+e.g. `.../image/upload/w_400,c_fill,f_webp,q_auto/repwise/exercises/Barbell_Full_Squat/0`.
+
+Cloudinary builds each sized version the first time it's requested (about 2.5s), then caches it. Use a fixed format like `f_webp` rather than `f_auto`, which builds a separate copy for each format a browser asks for. `npm run warm-stills` requests every panel thumbnail and detail still once so nobody waits for the first build.
 
 ### Status
 
