@@ -70,13 +70,28 @@ Recent decisions affecting current work:
 ### Pending Todos
 
 - Run `npm run search-tokens -- --write` (the user runs it; it needs .env)
+- Run `npm run warm-stills` once (the user runs it; it needs .env)
 - Create the Vercel project, add the env vars and add the Vercel domain to Firebase Auth's authorized domains
 
 ### Blockers/Concerns
 
 - [Phase 1]: DATA-02 edits `../repwise/firestore.rules`, which showed uncommitted changes in the app repo when this roadmap was written. Merge with care and deploy to project `repwise-25`
 - [Phase 1]: The contract (DATA-01) must settle three things the later phases rely on: a stable seed identity per exercise and a way to tell admin-edited exercises apart (SEED-01), whether lists are referenced by ID so a rename carries through (ADMN-07), and the archived flag
-- [Phase 1]: Decide whether the admin claim is re-checked on every request, so a revoked admin loses access before the session cookie expires
+- [Resolved 2026-11-26]: The admin claim is re-checked at most once a minute per server instance (quick/20261126-detail-only), so a revoked admin loses access within a minute
+
+### Quick Tasks Completed
+
+| Date | Task | Directory |
+|------|------|-----------|
+| 2026-11-25 | Thumbnails in f_webp, warm-stills script | quick/20261125-warm-thumbnails |
+| 2026-11-26 | Warm detail stills, cache list names for 5 minutes | quick/20261126-faster-detail |
+| 2026-11-26 | Exercise opens in a dialog from a detail-only fetch, admin check cached 60s | quick/20261126-detail-only |
+| 2026-11-26 | Sidebar and top bar shell, light and dark mode | quick/20261126-admin-shell |
+| 2026-11-26 | Dark only, all black, grey sidebar line, violet secondary, no status pills | quick/20261126-black-neon |
+| 2026-11-26 | Collapsible sidebar: animated icon strip, cookie-remembered | quick/20261126-collapsible-sidebar |
+| 2026-11-26 | Exercises page: count cards, list and detail split, borderless dialog | quick/20261126-exercise-overview |
+| 2026-11-26 | Hanken Grotesk body text, page fits the window, taller count cards with corner icons | quick/20261126-cards-and-fit |
+| 2026-11-26 | Exercise detail in the right panel on wide screens, new detail layout, email off the top bar | quick/20261126-detail-panel |
 
 ## Deferred Items
 
