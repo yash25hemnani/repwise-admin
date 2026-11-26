@@ -1,0 +1,30 @@
+<% const current = (name) => (page === name ? ' aria-current="page"' : ''); %>
+<% const collapsed = Boolean(locals.sidebarCollapsed); %>
+<aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <div class="sidebar-head">
+    <a class="sidebar-mark" href="/admin">repwise</a>
+    <button type="button" class="icon-button sidebar-toggle" aria-label="<%= collapsed ? 'Expand menu' : 'Collapse menu' %>" hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="toggle-pane" x="3" y="4" width="6" height="16" rx="3" stroke="none"/><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+    </button>
+    <a class="icon-button sidebar-close" href="#" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </a>
+  </div>
+  <nav class="nav" aria-label="Pages">
+    <a class="nav-item" href="/admin" data-label="Overview"<%- current('overview') %>>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+      <span class="nav-label">Overview</span>
+    </a>
+    <a class="nav-item" href="/admin/exercises" data-label="Exercises"<%- current('exercises') %>>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12"/></svg>
+      <span class="nav-label">Exercises</span>
+    </a>
+  </nav>
+  <form class="sidebar-foot" method="post" action="/admin/logout">
+    <button type="submit" class="nav-item" data-label="Sign out">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3M16 16l4-4-4-4M20 12H10"/></svg>
+      <span class="nav-label">Sign out</span>
+    </button>
+  </form>
+</aside>
+<a class="scrim" href="#" tabindex="-1" aria-hidden="true"></a>

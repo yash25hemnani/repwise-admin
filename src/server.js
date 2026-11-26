@@ -22,6 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
+// Render the sidebar as the admin left it, so it doesn't flash open on load
+app.use((req, res, next) => {
+  res.locals.sidebarCollapsed = req.cookies.sidebar === 'collapsed';
+  next();
+});
+
 // Public auth routes first, then everything under /admin needs an admin
 app.use('/admin', authRoutes);
 app.use('/admin', requireAdmin);

@@ -1,8 +1,9 @@
 import { db } from './firebase.js';
 import { searchWords } from './search.js';
 
-const THUMB = 'w_96,h_96,c_fill,f_auto,q_auto';
-const LARGE = 'w_400,c_fill,f_auto,q_auto';
+// f_webp, not f_auto: one cached file per size instead of one per browser format
+export const THUMB = 'w_96,h_96,c_fill,f_webp,q_auto';
+export const LARGE = 'w_400,c_fill,f_webp,q_auto';
 
 // Sized Cloudinary URL from the stored original, so no secret is needed here
 export const still = (url, transform) => url.replace('/upload/', `/upload/${transform}/`);
@@ -17,13 +18,42 @@ async function names(collection) {
   return Object.fromEntries(snap.docs.map((doc) => [doc.id, doc.get('name')]));
 }
 
-// About 35 docs, small enough to read on every request
-export async function loadLists() {
+async function readLists() {
   const [muscleGroups, targetMuscles, equipment] = await Promise.all(
     ['muscleGroups', 'targetMuscles', 'equipment'].map(names),
   );
   return { muscleGroups, targetMuscles, equipment };
 }
+
+// Aggregation counts: about one read per 1,000 exercises, not one per exercise
+async function readCounts() {
+  const exercises = db.collection('exercises');
+  const [total, withGif] = await Promise.all([
+    exercises.count().get(),
+    exercises.where('media.gif', '!=', null).count().get(),
+  ]);
+  return { total: total.data().count, withGif: withGif.data().count };
+}
+
+const TTL = 5 * 60 * 1000;
+
+// These rarely change, so each server instance keeps them for 5 minutes.
+// A failed read isn't kept, so the next request tries again
+function cachedFor5Minutes(read) {
+  let cached = null;
+  return () => {
+    if (cached && Date.now() - cached.at < TTL) return cached.value;
+    const value = read();
+    cached = { at: Date.now(), value };
+    value.catch(() => {
+      if (cached?.value === value) cached = null;
+    });
+    return value;
+  };
+}
+
+export const loadLists = cachedFor5Minutes(readLists);
+export const loadCounts = cachedFor5Minutes(readCounts);
 
 function toRow(doc, lists) {
   const data = doc.data();
@@ -72,5 +102,7 @@ export async function getExercise(id, lists) {
     steps: data.steps ?? [],
     stills: (data.media?.stills ?? []).map((s) => still(s.url, LARGE)),
     gif: data.media?.gif?.url ?? null,
+    source: data.source ?? null,
+    editedAt: data.editedAt?.toDate?.() ?? null,
   };
 }

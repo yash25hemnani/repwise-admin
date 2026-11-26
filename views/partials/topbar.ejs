@@ -1,10 +1,10 @@
+<% const email = admin.email || ''; %>
 <header class="topbar">
-  <a class="topbar-mark" href="/admin">repwise</a>
-  <nav class="tabs" aria-label="Sections">
-    <a class="tab" href="/admin/exercises"<% if (tab === 'exercises') { %> aria-current="page"<% } %>>Exercises</a>
-  </nav>
-  <span class="topbar-email"><%= admin.email %></span>
-  <form method="post" action="/admin/logout">
-    <button type="submit" class="button button-small">Sign out</button>
-  </form>
+  <a class="icon-button menu-button" href="#sidebar" role="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </a>
+  <h1 class="topbar-title"><%= title %></h1>
+  <div class="account" title="<%= email %>">
+    <span class="avatar" aria-hidden="true"><%= (email[0] || '?').toUpperCase() %></span>
+  </div>
 </header>

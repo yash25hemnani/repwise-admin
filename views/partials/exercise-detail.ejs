@@ -1,0 +1,80 @@
+<%
+  const label = (s) => s[0].toUpperCase() + s.slice(1);
+  const field = (v) => (v ? label(v) : 'Not set');
+  const levels = ['beginner', 'intermediate', 'expert'];
+  const day = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+%>
+<% if (selected) { %>
+  <%
+    const rank = levels.indexOf(selected.level) + 1;
+    const history = selected.status === 'archived' ? 'Archived'
+      : selected.status === 'edited' ? (selected.editedAt ? `Edited ${day(selected.editedAt)}` : 'Edited')
+      : selected.source === 'admin' ? 'Added in the admin'
+      : 'Imported from the dataset, not edited yet';
+  %>
+  <header class="detail-head">
+    <div class="detail-title">
+      <h2 class="detail-name"><%= selected.name %></h2>
+      <p class="detail-meta"><span><%= selected.group %></span><span><%= selected.equipment %></span></p>
+    </div>
+    <a class="detail-close" href="/admin/exercises<%= keep %>" aria-label="Close">&times;</a>
+  </header>
+
+  <% if (selected.gif) { %>
+    <div class="media media-gif">
+      <figure class="media-tile"><img src="<%= selected.gif %>" alt="<%= selected.name %>, animated"></figure>
+    </div>
+  <% } else if (selected.stills.length) { %>
+    <div class="media">
+      <figure class="media-tile preview" aria-hidden="true">
+        <% selected.stills.forEach((src, f) => { %><img class="frame-<%= f %>" src="<%= src %>" alt=""><% }) %>
+        <figcaption>App preview</figcaption>
+      </figure>
+      <% selected.stills.forEach((src, f) => { %>
+        <figure class="media-tile still"><img src="<%= src %>" alt="<%= selected.name %>, frame <%= f + 1 %>"></figure>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="media media-empty"><p>No images yet.</p></div>
+  <% } %>
+
+  <div class="works">
+    <h3 class="detail-label">Works</h3>
+    <ul class="chips">
+      <li class="chip chip-target"><span class="visually-hidden">Target: </span><%= selected.target %></li>
+      <% selected.secondaries.forEach((m) => { %><li class="chip"><%= m %></li><% }) %>
+    </ul>
+  </div>
+
+  <dl class="facts">
+    <div>
+      <dt>Level</dt>
+      <dd class="level-value">
+        <% if (rank) { %><span class="level" aria-hidden="true"><% levels.forEach((_, i) => { %><i<%= i < rank ? ' class=on' : '' %>></i><% }) %></span><% } %>
+        <%= field(selected.level) %>
+      </dd>
+    </div>
+    <div><dt>Category</dt><dd><%= field(selected.category) %></dd></div>
+    <div><dt>Force</dt><dd><%= field(selected.force) %></dd></div>
+    <div><dt>Mechanic</dt><dd><%= field(selected.mechanic) %></dd></div>
+  </dl>
+
+  <h3 class="detail-label">How to do it</h3>
+  <% if (selected.steps.length) { %>
+    <ol class="steps">
+      <% selected.steps.forEach((step) => { %><li><%= step %></li><% }) %>
+    </ol>
+  <% } else { %>
+    <p class="detail-empty">No steps yet.</p>
+  <% } %>
+
+  <p class="detail-foot"><span><%= selected.id %></span><span><%= history %></span></p>
+<% } else if (notFound) { %>
+  <header class="detail-head">
+    <div class="detail-title">
+      <h2 class="detail-name">Not found</h2>
+    </div>
+    <a class="detail-close" href="/admin/exercises<%= keep %>" aria-label="Close">&times;</a>
+  </header>
+  <p class="detail-empty">No exercise with that ID. Pick one from the list.</p>
+<% } %>

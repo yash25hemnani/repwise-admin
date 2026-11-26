@@ -1,28 +1,14 @@
-/* Tokens match ../repwise/lib/core/theme/app_colors.dart */
+/* Dark only. Tokens match ../repwise/lib/core/theme/app_colors.dart */
 :root {
-  color-scheme: light dark;
-  --bg: #F4F5F3;
-  --surface: #E6E8E5;
-  --border: #D5D8D4;
-  --text: #000000;
-  --text-2: #5C6066;
-  --green: #0A7A4B;
-  --on-green: #FFFFFF;
-  --yellow: #F9C356;
-  --red: #C7362F;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #000000;
-    --surface: #1C1C1F;
-    --border: #2A2A2E;
-    --text: #FFFFFF;
-    --text-2: #A1A1A8;
-    --green: #5DF0A6;
-    --on-green: #000000;
-    --red: #E5534B;
-  }
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #1C1C1F;
+  --border: #2A2A2E;
+  --text: #FFFFFF;
+  --text-2: #A1A1A8;
+  --green: #5DF0A6;
+  --on-green: #000000;
+  --red: #E5534B;
 }
 
 * {
@@ -33,7 +19,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.5;
 }
@@ -198,47 +184,6 @@ body {
   }
 }
 
-.topbar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.topbar-mark {
-  margin-right: auto;
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 125%;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-}
-
-.topbar-email {
-  color: var(--text-2);
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.button-small {
-  width: auto;
-  padding: 7px 12px;
-  font-size: 14px;
-}
-
-.page {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 20px;
-}
-
-.page .lede {
-  margin: 0;
-  text-align: left;
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -248,110 +193,558 @@ body {
   white-space: nowrap;
 }
 
-/* Admin pages: dark only, tokens from .planning/DESIGN.md */
+/* Admin pages, tokens from .planning/DESIGN.md. Black panels with grey lines;
+   grey fills only for the count cards and the dialog. Mint is action, violet is location */
 body.admin {
-  color-scheme: dark;
-  --bg: #15171A;
-  --panel: #202328;
-  --tile: #2A2E34;
-  --chalk: #F4F5F3;
-  --ink: #000000;
-  --ink-2: #5C6066;
+  --frame: #000000;
+  --bg: #000000;
+  --panel: #000000;
+  --tile: #000000;
+  --card: #161618;
   --text: #FFFFFF;
   --text-2: #9BA0A8;
+  --neon: #5DF0A6;
+  --line: #2A2A2E;
+  --line-2: #3A3A40;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --accent: #5DF0A6;
-  --yellow: #F9C356;
-  --red: #E5534B;
-  /* Older shared classes (.button) read these */
-  --surface: var(--tile);
-  --border: var(--tile);
-  --green: var(--accent);
-  --on-green: var(--ink);
-  background: var(--bg);
+  --ink: #000000;
+  --side-text: #9BA0A8;
+  /* Secondary: where you are (focus, hover, the open row) */
+  --violet: #8B53FE;
+  --hover: rgb(139 83 254 / 0.14);
+  --selected: rgb(139 83 254 / 0.3);
+  background: var(--frame);
   color: var(--text);
 }
 
-.admin .topbar {
-  gap: 20px;
-  padding: 16px 24px;
-  border-bottom: 0;
+body.admin :focus-visible {
+  outline-color: var(--violet);
 }
 
-.admin .topbar-mark {
-  margin-right: 0;
-  color: var(--text);
-  text-decoration: none;
+/* The sidebar, split from the page by a grey line */
+.shell {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
-.admin .topbar-email {
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  height: 100vh;
+  height: 100svh;
+  padding: 28px 13px 20px;
+  border-right: 1px solid var(--line);
+  background: var(--frame);
+  color: var(--side-text);
+}
+
+.sidebar :focus-visible {
+  outline-color: var(--accent);
+}
+
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding-left: 14px;
+}
+
+.sidebar-toggle,
+.sidebar-close {
   margin-left: auto;
 }
 
-.admin .button {
-  border-radius: 999px;
+/* A panel icon, no ring: its left pane is filled while the sidebar is open.
+   The .sidebar prefix outranks .icon-button, which comes later */
+.sidebar .sidebar-toggle {
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--side-text);
 }
 
-.tabs {
+.sidebar .sidebar-toggle:hover {
+  background: var(--hover);
+  color: #FFFFFF;
+}
+
+.toggle-pane {
+  fill: currentColor;
+  opacity: 0.35;
+}
+
+.sidebar-toggle[hidden] {
+  display: none;
+}
+
+/* The block padding keeps the descender inside the clip */
+.sidebar-mark {
+  min-width: 0;
+  overflow: hidden;
+  padding-block: 6px;
+  color: #FFFFFF;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav {
+  display: grid;
+  gap: 4px;
+}
+
+.nav-item {
   display: flex;
-  padding: 4px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
   border-radius: 999px;
-  background: var(--chalk);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.tab {
-  padding: 6px 16px;
+.nav-item svg {
+  flex: none;
+}
+
+.nav-item:hover {
+  background: var(--hover);
+  color: #FFFFFF;
+}
+
+.nav-item[aria-current="page"] {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.sidebar-foot {
+  margin: auto 0 0;
+}
+
+/* Desktop only: the sidebar folds to an icon strip, labels become tooltips.
+   Icons keep their place, so only the words move: they wipe out as the strip
+   narrows, and the wordmark condenses away, then flexes back like the home page */
+@media (min-width: 861px) {
+  .shell {
+    transition: grid-template-columns 0.28s var(--ease);
+  }
+
+  .sidebar {
+    z-index: 5;
+  }
+
+  .sidebar-head {
+    transition: padding 0.28s var(--ease), gap 0.28s var(--ease);
+  }
+
+  .sidebar-mark {
+    max-width: 160px;
+    transition: opacity 0.2s ease 0.1s, font-stretch 0.45s var(--ease) 0.05s, max-width 0.28s var(--ease);
+  }
+
+  .toggle-pane {
+    transition: opacity 0.28s var(--ease);
+  }
+
+  /* The label shrinks with the strip, so the item never outgrows it */
+  .nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nav-item {
+    position: relative;
+    white-space: nowrap;
+    transition: gap 0.28s var(--ease);
+  }
+
+  .nav-label {
+    min-width: 0;
+    overflow: hidden;
+    clip-path: inset(0);
+    transition: opacity 0.2s ease 0.1s, clip-path 0.24s ease 0.08s;
+  }
+
+  .shell.is-collapsed {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  /* 72px strip less 13px padding each side leaves 46px: the toggle centres in it */
+  .is-collapsed .sidebar-head {
+    gap: 0;
+    padding: 0 3px 0 0;
+  }
+
+  .is-collapsed .sidebar-mark {
+    max-width: 0;
+    opacity: 0;
+    font-stretch: 62%;
+    visibility: hidden;
+    transition: opacity 0.12s ease, font-stretch 0.28s var(--ease), max-width 0.28s var(--ease), visibility 0s linear 0.28s;
+  }
+
+  .is-collapsed .toggle-pane {
+    opacity: 0;
+  }
+
+  .is-collapsed .nav-item {
+    gap: 0;
+  }
+
+  /* Clipped, not hidden: screen readers still read the label */
+  .is-collapsed .nav-label {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: opacity 0.12s ease, clip-path 0.12s ease;
+  }
+
+  .is-collapsed .nav-item::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 24px);
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--frame);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateY(-50%);
+  }
+
+  .is-collapsed .nav-item:hover::after,
+  .is-collapsed .nav-item:focus-visible::after {
+    visibility: visible;
+  }
+}
+
+@media (min-width: 861px) and (prefers-reduced-motion: reduce) {
+  .shell,
+  .sidebar-head,
+  .sidebar-mark,
+  .toggle-pane,
+  .nav-item,
+  .nav-label,
+  .is-collapsed .sidebar-mark,
+  .is-collapsed .nav-label {
+    transition: none;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 32px 40px;
+  background: var(--bg);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0 20px;
+}
+
+.topbar-title {
+  min-width: 0;
+  margin: 0 auto 0 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.icon-button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
   border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--hover);
+}
+
+.menu-button,
+.scrim,
+.sidebar .sidebar-close {
+  display: none;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin-left: 4px;
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.content {
+  flex: 1;
+}
+
+.panel {
+  max-width: 960px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+}
+
+.panel-title {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.panel-text {
+  max-width: 60ch;
+  margin: 0 0 20px;
+  color: var(--text-2);
+}
+
+.pill-link {
+  display: inline-block;
+  padding: 9px 20px;
+  border-radius: 999px;
+  background: var(--accent);
   color: var(--ink);
   font-weight: 500;
   text-decoration: none;
 }
 
-.tab[aria-current="page"] {
-  background: var(--accent);
+.pill-link:hover {
+  text-decoration: underline;
 }
 
-.tabs .tab:focus-visible {
-  outline-color: var(--ink);
+/* Library counts: mint for the total, grey for the lists. Numbers in the
+   wordmark's face so they read as the brand's, not a table's */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 20px;
 }
 
-.workspace {
-  max-width: 1440px;
-  padding: 8px 24px 40px;
-}
-
-.workspace-head {
+/* Label top left, number bottom left, a big line icon in the bottom right */
+.stat {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 32px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  min-height: 112px;
+  padding: 16px 20px 18px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--card);
 }
 
-.page-title {
+.stat dt {
+  position: relative;
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stat dd {
   margin: 0;
   font-family: 'Archivo', sans-serif;
   font-weight: 900;
   font-stretch: 125%;
-  font-size: 37px;
-  line-height: 1.1;
+  font-size: 34px;
+  line-height: 1;
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-num {
+  position: relative;
+}
+
+.stat-icon {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  width: 56px;
+  height: 56px;
+  color: rgb(255 255 255 / 0.14);
+  pointer-events: none;
+}
+
+.stat-total {
+  background: var(--neon);
+  color: var(--ink);
+}
+
+.stat-total dt {
+  color: rgb(0 0 0 / 0.66);
+}
+
+.stat-total .stat-icon {
+  color: rgb(0 0 0 / 0.2);
+}
+
+/* List on the left, the exercise on the right; the right card spans search and list */
+.split {
+  display: grid;
+  grid-template-columns: minmax(340px, 5fr) minmax(0, 7fr);
+  gap: 20px;
+}
+
+.split-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.split-side {
+  display: flex;
+  min-width: 0;
+}
+
+.side-empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  border: 1.5px dashed var(--line-2);
+  border-radius: 28px;
+  text-align: center;
+}
+
+.side-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--hover);
+  color: var(--violet);
+}
+
+.side-empty p {
+  max-width: 28ch;
+  margin: 0;
+  color: var(--text-2);
+}
+
+.split-side [hidden] {
+  display: none;
+}
+
+/* Framed like the list: the outline holds still and the exercise scrolls
+   inside it, with the scrollbar kept clear of the corners */
+.side-detail {
+  --surface: var(--panel);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px 4px 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+}
+
+.side-scroll {
+  padding: 0 20px 16px 28px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+
+.side-detail .detail-head {
+  padding-top: 16px;
 }
 
 .search {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 12px;
+}
+
+.search-field {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  color: var(--text-2);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .search input {
-  width: 340px;
-  max-width: 100%;
-  padding: 11px 20px;
-  border: 0;
+  flex: 1;
+  min-width: 0;
+  padding: 11px 20px 11px 46px;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--tile);
+  background: var(--panel);
   color: var(--text);
   font: inherit;
+}
+
+/* The violet edge is the focus ring, so the global outline would double it */
+.search input:focus,
+.search input:focus-visible {
+  border-color: var(--violet);
+  outline: none;
 }
 
 .search input::placeholder {
@@ -363,30 +756,111 @@ body.admin {
   font-weight: 500;
 }
 
-.split {
-  display: grid;
-  grid-template-columns: minmax(360px, 520px) minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-}
-
-/* The chalk list */
+/* The outline is the frame and the list scrolls inside it, so the scrollbar
+   sits in the padding, clear of the rounded corners */
 .list-panel {
+  display: flex;
+  flex-direction: column;
   padding: 12px;
+  border: 1px solid var(--line);
   border-radius: 28px;
-  background: var(--chalk);
-  color: var(--ink);
+  background: var(--panel);
 }
 
-.list-panel :focus-visible {
-  outline-color: var(--ink);
+/* Standard scrollbar properties, not ::-webkit-scrollbar: a custom webkit
+   thumb is painted off the scroll thread, so it lagged behind the list */
+.list-scroll {
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+
+/* Wide screens: the page fits the window and only the list scrolls */
+@media (min-width: 1001px) {
+  .main-fit {
+    height: 100vh;
+    height: 100svh;
+    min-height: 640px;
+    padding-bottom: 32px;
+  }
+
+  .main-fit .content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* The grid row defaults to the list's full height; pin it to the space left */
+  .main-fit .split {
+    flex: 1;
+    grid-template-rows: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .main-fit .split-list,
+  .main-fit .split-side {
+    min-height: 0;
+  }
+
+  .main-fit .side-detail {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .main-fit .side-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .main-fit .list-panel {
+    flex: 1;
+    min-height: 0;
+    padding-right: 4px;
+    overflow: hidden;
+  }
+
+  /* contain: reaching the end doesn't hand the scroll on to the page */
+  .main-fit .list-scroll {
+    flex: 1;
+    padding-right: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat-total {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Narrow: one column, the page scrolls, the exercise opens in the dialog.
+   Without the script, an open exercise shows below the list instead */
+@media (max-width: 1000px) {
+  .split {
+    display: block;
+  }
+
+  .split-side {
+    display: none;
+  }
+
+  .split-side.is-open {
+    display: flex;
+    margin-top: 20px;
+  }
 }
 
 .list-message,
 .list-count {
   margin: 0;
   padding: 12px;
-  color: var(--ink-2);
+  color: var(--text-2);
 }
 
 .list-message {
@@ -405,22 +879,21 @@ body.admin {
 
 .row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 14px;
   padding: 6px 14px 6px 6px;
-  border-radius: 999px;
+  border-radius: 18px;
   color: inherit;
   text-decoration: none;
 }
 
 .row:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--hover);
 }
 
 .row[aria-current="true"] {
-  background: var(--panel);
-  color: var(--text);
+  background: var(--selected);
 }
 
 .row-text {
@@ -436,12 +909,8 @@ body.admin {
 }
 
 .row-group {
-  color: var(--ink-2);
-  font-size: 12px;
-}
-
-.row[aria-current="true"] .row-group {
   color: var(--text-2);
+  font-size: 12px;
 }
 
 /* Stills flip: frame 2 sits on frame 1 and shows only while the admin points at the row */
@@ -450,8 +919,9 @@ body.admin {
   width: 48px;
   height: 48px;
   overflow: hidden;
+  border: 1px solid var(--line);
   border-radius: 16px;
-  background: #E2E4E1;
+  background: var(--tile);
 }
 
 .thumb img {
@@ -478,82 +948,121 @@ body.admin {
   bottom: 3px;
   padding: 0 5px;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--text);
+  background: #000000;
+  color: #FFFFFF;
   font-size: 12px;
   font-weight: 700;
   line-height: 18px;
-}
-
-/* Status colors only ever mean status */
-.status {
-  padding: 3px 10px;
-  border-radius: 999px;
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.status-imported {
-  background: var(--yellow);
-}
-
-.status-edited {
-  background: var(--accent);
-}
-
-.status-archived {
-  background: var(--text-2);
 }
 
 .load-more {
   display: inline-block;
   margin: 12px 6px 6px;
   padding: 9px 20px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--text);
   border-radius: 999px;
-  color: var(--ink);
+  color: var(--text);
   font-weight: 500;
   text-decoration: none;
 }
 
 .load-more:hover {
-  background: var(--ink);
-  color: var(--chalk);
+  background: var(--text);
+  color: var(--panel);
 }
 
-/* The dark detail panel stays in view while the list scrolls */
-.detail-panel {
-  position: sticky;
-  top: 16px;
+.row[aria-busy="true"] {
+  opacity: 0.6;
+}
+
+/* The exercise opens on a raised grey sheet over a dimmed, blurred page.
+   A faint white hairline gives it an edge; the black tiles inside sit in it like wells */
+.detail {
+  --surface: var(--card);
+  width: min(880px, calc(100vw - 32px));
+  max-width: none;
   max-height: calc(100svh - 32px);
-  overflow-y: auto;
-  padding: 28px;
+  padding: 0;
+  border: 0;
   border-radius: 28px;
-  background: var(--panel);
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07), 0 32px 80px rgb(0 0 0 / 0.7);
+  color: var(--text);
+  overflow-y: auto;
 }
 
-.back {
-  display: none;
-  margin-bottom: 16px;
-  color: var(--text-2);
-  font-weight: 500;
+.detail[open] {
+  animation: rise 0.2s var(--ease);
 }
 
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
+
+.detail::backdrop {
+  background: rgb(0 0 0 / 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.detail-body {
+  padding: 0 28px 28px;
+}
+
+.detail-close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: none;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.detail-close:hover {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* Stays put while the steps scroll under it */
 .detail-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 4px;
+  padding: 28px 0 16px;
+  background: var(--surface);
+}
+
+.detail-title {
+  flex: 1;
+  min-width: 0;
 }
 
 .detail-name {
   margin: 0;
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  color: var(--text-2);
 }
 
 .detail-empty {
@@ -574,6 +1083,7 @@ body.admin {
   position: relative;
   margin: 0;
   overflow: hidden;
+  border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--tile);
 }
@@ -631,9 +1141,11 @@ body.admin {
 
 .media-empty {
   display: grid;
+  grid-template: none;
   place-items: center;
   min-height: 160px;
   margin-bottom: 12px;
+  border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--tile);
   color: var(--text-2);
@@ -643,62 +1155,97 @@ body.admin {
   margin: 0;
 }
 
-.tiles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0 0 24px;
-}
-
-.tile {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--tile);
-}
-
-.tile dt,
-.facts dt {
-  color: var(--text-2);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.tile dd {
-  margin: 2px 0 0;
-  font-size: 19px;
-}
-
 .detail-label {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: var(--text-2);
   font-size: 15px;
   font-weight: 500;
 }
 
+/* The target is the solid pill; the rest are outlined */
+.works {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 24px 0 28px;
+}
+
+.works .detail-label {
+  flex: none;
+  margin: 0;
+}
+
 .chips {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 0 24px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .chip {
   padding: 5px 14px;
+  border: 1px solid var(--line-2);
   border-radius: 999px;
-  background: var(--tile);
+}
+
+.chip-target {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 600;
 }
 
 .facts {
   display: grid;
   grid-template-columns: repeat(4, max-content);
-  gap: 8px 40px;
-  margin: 0 0 28px;
+  gap: 6px 40px;
+  margin: 0 0 32px;
+}
+
+.facts dt {
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .facts dd {
   margin: 0;
+}
+
+.level-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Three rising bars, filled up to the level */
+.level {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+}
+
+.level i {
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--line-2);
+}
+
+.level i:nth-child(2) {
+  height: 11px;
+}
+
+.level i:nth-child(3) {
+  height: 14px;
+}
+
+.level i.on {
+  background: var(--text);
 }
 
 .steps {
@@ -711,18 +1258,40 @@ body.admin {
 
 .steps li {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  margin-bottom: 12px;
+  grid-template-columns: 36px minmax(0, 1fr);
+  margin-bottom: 14px;
+  line-height: 1.55;
   counter-increment: step;
 }
 
 .steps li::before {
   content: counter(step);
-  color: var(--text-2);
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-stretch: 125%;
   font-variant-numeric: tabular-nums;
 }
 
+.detail-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 28px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.detail-foot span:first-child {
+  overflow-wrap: anywhere;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .detail[open] {
+    animation: none;
+  }
+
   .row:hover .frame-1,
   .row:focus-visible .frame-1,
   .row[aria-current="true"] .frame-1 {
@@ -740,58 +1309,120 @@ body.admin {
   }
 }
 
-/* One panel at a time: the list, or the selected exercise */
-@media (max-width: 1000px) {
-  .split {
-    grid-template-columns: minmax(0, 1fr);
+/* The sidebar slides out from the menu button */
+@media (max-width: 860px) {
+  .shell {
+    display: block;
   }
 
-  .detail-panel {
-    position: static;
-    max-height: none;
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    width: min(280px, 85vw);
+    height: auto;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease, visibility 0s linear 0.2s;
   }
 
-  body:not(.has-detail) .detail-panel,
-  .has-detail .list-panel,
-  .has-detail .search {
+  .sidebar:target,
+  .menu-open .sidebar {
+    visibility: visible;
+    transform: none;
+    transition: transform 0.2s ease;
+  }
+
+  .sidebar .sidebar-close {
+    display: grid;
+    color: #FFFFFF;
+  }
+
+  .sidebar .sidebar-toggle {
     display: none;
   }
 
-  .back {
-    display: inline-block;
+  .sidebar:target ~ .scrim,
+  .menu-open .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    background: rgb(0 0 0 / 0.5);
+  }
+
+  .menu-open {
+    overflow: hidden;
+  }
+
+  .main {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 0 16px 32px;
+  }
+
+  .menu-button {
+    display: grid;
+  }
+
+  .topbar {
+    padding: 16px 0;
+  }
+
+  .topbar-title {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 860px) and (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar:target,
+  .menu-open .sidebar {
+    transition: none;
   }
 }
 
 @media (max-width: 600px) {
-  .admin .topbar {
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px 16px;
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .admin .topbar-email {
-    display: none;
+  .stat {
+    min-height: 100px;
   }
 
-  .admin .topbar form {
-    margin-left: auto;
+  .stat dd {
+    font-size: 28px;
   }
 
-  .workspace {
-    padding: 4px 16px 32px;
+  .stat-icon {
+    width: 44px;
+    height: 44px;
   }
 
-  .page-title {
-    font-size: 30px;
+  /* Full screen on phones */
+  .detail {
+    width: 100vw;
+    height: 100svh;
+    max-height: none;
+    border-radius: 0;
   }
 
-  .search,
-  .search input {
-    width: 100%;
+  .detail-body {
+    padding: 0 20px 20px;
   }
 
-  .detail-panel {
-    padding: 20px;
+  .detail-head {
+    padding-top: 20px;
+  }
+
+  .detail-name {
+    font-size: 24px;
+  }
+
+  .works {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .media {
@@ -802,10 +1433,6 @@ body.admin {
   .preview {
     grid-column: span 2;
     grid-row: auto;
-  }
-
-  .tiles {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .facts {

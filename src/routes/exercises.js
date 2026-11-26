@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { loadLists, listExercises, getExercise } from '../exercises.js';
+import { loadLists, loadCounts, listExercises, getExercise } from '../exercises.js';
 
 const router = Router();
 
@@ -26,18 +26,35 @@ async function render(req, res, id = null) {
   const limit = pageLimit(req.query.limit);
   const view = {
     q, limit, rows: [], hasMore: false, selected: null, notFound: false, error: null,
+    stats: {},
     base: req.baseUrl + req.path,
     keep: query({ q, limit }),
     more: query({ q, limit: limit + PAGE }) + `#row-${limit}`,
   };
 
+  // The page's script asks for the detail panel alone, so the list query is skipped
+  const partial = req.get('X-Partial') === 'detail';
+  res.vary('X-Partial');
+
   try {
     const lists = await loadLists();
-    const [list, selected] = await Promise.all([
-      listExercises({ q, limit }, lists),
+    const [list, selected, counts] = await Promise.all([
+      partial ? null : listExercises({ q, limit }, lists),
       id ? getExercise(id, lists) : null,
+      // A failed count shows a dash instead of breaking the list
+      partial ? null : loadCounts().catch((err) => {
+        console.error(err.message);
+        return null;
+      }),
     ]);
     Object.assign(view, list, { selected, notFound: Boolean(id && !selected) });
+    view.stats = {
+      total: counts?.total,
+      muscleGroups: Object.keys(lists.muscleGroups).length,
+      targetMuscles: Object.keys(lists.targetMuscles).length,
+      equipment: Object.keys(lists.equipment).length,
+      withGif: counts?.withGif,
+    };
     view.hasMore &&= limit < MAX;
     if (view.notFound) res.status(404);
   } catch (err) {
@@ -46,6 +63,8 @@ async function render(req, res, id = null) {
     view.error = "Couldn't load exercises. The server log has the details.";
     res.status(500);
   }
+  // On an error the script falls back to loading the full page
+  if (partial) return res.render('partials/exercise-detail', view);
   res.render('exercises', view);
 }
 

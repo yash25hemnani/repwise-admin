@@ -1,125 +1,104 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= selected ? selected.name + ' · ' : '' %>Exercises · Repwise</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,900&family=DM+Sans:wght@300;400;500;700&display=swap">
-  <link rel="stylesheet" href="/css/app.css">
-</head>
-<%
-  const label = (s) => s[0].toUpperCase() + s.slice(1);
-  const field = (v) => (v ? label(v) : 'Not set');
-%>
-<body class="admin<%= selected || notFound ? ' has-detail' : '' %>">
-  <%- include('partials/topbar', { tab: 'exercises' }) %>
-  <main class="workspace">
-    <div class="workspace-head">
-      <h1 class="page-title">Exercises</h1>
-      <form class="search" method="get" action="/admin/exercises" role="search">
-        <label class="visually-hidden" for="q">Search by name</label>
-        <input id="q" name="q" type="search" value="<%= q %>" placeholder="Search by name" autocomplete="off">
-        <% if (q) { %><a class="search-clear" href="/admin/exercises">Clear</a><% } %>
-      </form>
-    </div>
+<%- include('partials/head', { title: (selected ? selected.name + ' · ' : '') + 'Exercises · Repwise' }) %>
+<body class="admin">
+  <div class="shell<%= locals.sidebarCollapsed ? ' is-collapsed' : '' %>">
+  <%- include('partials/sidebar', { page: 'exercises' }) %>
+  <div class="main main-fit">
+  <%- include('partials/topbar', { title: 'Exercises' }) %>
+  <main class="content">
+    <% const count = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : '–'); %>
+    <%# The icon sits in the dd because a dl's div may only hold dt and dd %>
+    <% const icons = {
+      dumbbell: '<path d="M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12"/>',
+      body: '<circle cx="12" cy="4.5" r="1.5"/><path d="M6 8l6 2 6-2M12 10v4M9 20l3-6 3 6"/>',
+      target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+      kettlebell: '<path d="M8.5 11V8.5a3.5 3.5 0 0 1 7 0V11"/><circle cx="12" cy="15.5" r="5.5"/>',
+      play: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>',
+    }; %>
+    <% const cards = [
+      ['stat stat-total', 'Exercises', stats.total, 'dumbbell'],
+      ['stat', 'Muscle groups', stats.muscleGroups, 'body'],
+      ['stat', 'Target muscles', stats.targetMuscles, 'target'],
+      ['stat', 'Equipment', stats.equipment, 'kettlebell'],
+      ['stat', 'With a GIF', stats.withGif, 'play'],
+    ]; %>
+    <dl class="stats" aria-label="Library counts">
+      <% cards.forEach(([cls, label, n, icon]) => { %>
+        <div class="<%= cls %>">
+          <dt><%= label %></dt>
+          <dd><span class="stat-num"><%= count(n) %></span><svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><%- icons[icon] %></svg></dd>
+        </div>
+      <% }) %>
+    </dl>
 
     <div class="split">
-      <section class="list-panel" aria-label="Exercise list">
-        <% if (error) { %>
-          <p class="list-message"><%= error %></p>
-        <% } else if (!rows.length) { %>
-          <p class="list-message">
-            <% if (q) { %>No exercises match "<%= q %>". Clear the filters, or add it as a new exercise.<% } else { %>No exercises yet. Run the seed to import the library.<% } %>
-          </p>
-        <% } else { %>
-          <% if (q) { %><p class="list-count"><%= rows.length %><%= hasMore ? '+' : '' %> matching "<%= q %>"</p><% } %>
-          <ul class="rows">
-            <% rows.forEach((row, i) => { %>
-              <li id="row-<%= i %>">
-                <a class="row" href="/admin/exercises/<%= encodeURIComponent(row.id) %><%= keep %>#row-<%= i %>"<% if (selected && selected.id === row.id) { %> aria-current="true"<% } %>>
-                  <span class="thumb">
-                    <% row.thumbs.forEach((src, f) => { %><img class="frame-<%= f %>" src="<%= src %>" alt="" width="48" height="48" loading="lazy"><% }) %>
-                    <% if (row.hasGif) { %><span class="gif-mark">GIF</span><% } %>
-                  </span>
-                  <span class="row-text">
-                    <span class="row-name"><%= row.name %></span>
-                    <span class="row-group"><%= row.group %></span>
-                  </span>
-                  <span class="status status-<%= row.status %>"><%= label(row.status) %></span>
-                </a>
-              </li>
-            <% }) %>
-          </ul>
-          <% if (hasMore) { %>
-            <a class="load-more" href="<%= base %><%= more %>">Load more</a>
-          <% } %>
+    <div class="split-list">
+    <form class="search" method="get" action="/admin/exercises" role="search">
+      <label class="visually-hidden" for="q">Search by name</label>
+      <span class="search-field">
+        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" name="q" type="search" value="<%= q %>" placeholder="Search by name" autocomplete="off">
+      </span>
+      <% if (q) { %><a class="search-clear" href="/admin/exercises">Clear</a><% } %>
+    </form>
+
+    <section class="list-panel" aria-label="Exercise list">
+      <div class="list-scroll">
+      <% if (error) { %>
+        <p class="list-message"><%= error %></p>
+      <% } else if (!rows.length) { %>
+        <p class="list-message">
+          <% if (q) { %>No exercises match "<%= q %>". Clear the filters, or add it as a new exercise.<% } else { %>No exercises yet. Run the seed to import the library.<% } %>
+        </p>
+      <% } else { %>
+        <% if (q) { %><p class="list-count"><%= rows.length %><%= hasMore ? '+' : '' %> matching "<%= q %>"</p><% } %>
+        <ul class="rows">
+          <% rows.forEach((row, i) => { %>
+            <li id="row-<%= i %>">
+              <a class="row" href="/admin/exercises/<%= encodeURIComponent(row.id) %><%= keep %>#row-<%= i %>"<% if (selected && selected.id === row.id) { %> aria-current="true"<% } %>>
+                <span class="thumb">
+                  <% row.thumbs.forEach((src, f) => { %><img class="frame-<%= f %>" src="<%= src %>" alt="" width="48" height="48" loading="lazy"><% }) %>
+                  <% if (row.hasGif) { %><span class="gif-mark">GIF</span><% } %>
+                </span>
+                <span class="row-text">
+                  <span class="row-name"><%= row.name %></span>
+                  <span class="row-group"><%= row.group %></span>
+                </span>
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+        <% if (hasMore) { %>
+          <a class="load-more" href="<%= base %><%= more %>">Load more</a>
         <% } %>
-      </section>
+      <% } %>
+      </div>
+    </section>
+    </div>
 
-      <section class="detail-panel" aria-label="Exercise details">
-        <% if (selected) { %>
-          <a class="back" href="/admin/exercises<%= keep %>">Back to list</a>
-          <header class="detail-head">
-            <h2 class="detail-name"><%= selected.name %></h2>
-            <span class="status status-<%= selected.status %>"><%= label(selected.status) %></span>
-          </header>
-
-          <% if (selected.gif) { %>
-            <div class="media media-gif">
-              <figure class="media-tile"><img src="<%= selected.gif %>" alt="<%= selected.name %>, animated"></figure>
-            </div>
-          <% } else if (selected.stills.length) { %>
-            <div class="media">
-              <figure class="media-tile preview" aria-hidden="true">
-                <% selected.stills.forEach((src, f) => { %><img class="frame-<%= f %>" src="<%= src %>" alt=""><% }) %>
-                <figcaption>App preview</figcaption>
-              </figure>
-              <% selected.stills.forEach((src, f) => { %>
-                <figure class="media-tile still"><img src="<%= src %>" alt="<%= selected.name %>, frame <%= f + 1 %>"></figure>
-              <% }) %>
-            </div>
-          <% } else { %>
-            <div class="media media-empty"><p>No images yet.</p></div>
-          <% } %>
-
-          <dl class="tiles">
-            <div class="tile"><dt>Muscle group</dt><dd><%= selected.group %></dd></div>
-            <div class="tile"><dt>Target</dt><dd><%= selected.target %></dd></div>
-            <div class="tile"><dt>Equipment</dt><dd><%= selected.equipment %></dd></div>
-          </dl>
-
-          <% if (selected.secondaries.length) { %>
-            <h3 class="detail-label">Also works</h3>
-            <ul class="chips">
-              <% selected.secondaries.forEach((m) => { %><li class="chip"><%= m %></li><% }) %>
-            </ul>
-          <% } %>
-
-          <dl class="facts">
-            <div><dt>Level</dt><dd><%= field(selected.level) %></dd></div>
-            <div><dt>Category</dt><dd><%= field(selected.category) %></dd></div>
-            <div><dt>Force</dt><dd><%= field(selected.force) %></dd></div>
-            <div><dt>Mechanic</dt><dd><%= field(selected.mechanic) %></dd></div>
-          </dl>
-
-          <h3 class="detail-label">Guide</h3>
-          <% if (selected.steps.length) { %>
-            <ol class="steps">
-              <% selected.steps.forEach((step) => { %><li><%= step %></li><% }) %>
-            </ol>
-          <% } else { %>
-            <p class="detail-empty">No steps yet.</p>
-          <% } %>
-        <% } else if (notFound) { %>
-          <a class="back" href="/admin/exercises<%= keep %>">Back to list</a>
-          <p class="detail-empty">No exercise with that ID. Pick one from the list.</p>
-        <% } else { %>
-          <p class="detail-empty">Select an exercise to see its stills, muscles and steps as the app will show them.</p>
-        <% } %>
-      </section>
+    <% const open = Boolean(selected || notFound); %>
+    <%# Wide screens show the exercise here; narrow ones move it into the dialog %>
+    <aside class="split-side<%= open ? ' is-open' : '' %>" aria-label="Exercise details">
+      <div class="side-detail"<%= open ? '' : ' hidden' %>>
+        <div class="side-scroll"><%- include('partials/exercise-detail', { selected, notFound, keep }) %></div>
+      </div>
+      <div class="side-empty"<%= open ? ' hidden' : '' %>>
+        <span class="side-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12"/></svg>
+        </span>
+        <p>Select an exercise to view its details</p>
+      </div>
+    </aside>
     </div>
   </main>
+  </div>
+  </div>
+
+  <%# Narrow screens only; the script fills it %>
+  <dialog class="detail" aria-label="Exercise details" data-list="/admin/exercises<%= keep %>">
+    <div class="detail-body"></div>
+  </dialog>
+  <script src="/js/exercises.js" defer></script>
 </body>
 </html>
