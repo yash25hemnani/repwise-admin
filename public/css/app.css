@@ -83,7 +83,7 @@ body {
   max-width: 360px;
 }
 
-/* Same mark as the home page, sized to the form column */
+/* The repwise mark, sized to the form column */
 .wordmark {
   margin: 0;
   text-align: center;
@@ -150,38 +150,6 @@ body {
   margin: 20px 0 0;
   text-align: center;
   color: var(--red);
-}
-
-.home {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  min-height: 100svh;
-  padding: 16px;
-}
-
-/* Flexes once on load, condensed to extended, like a rep */
-.home-mark {
-  margin: 0;
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 125%;
-  font-size: clamp(56px, 16vw, 220px);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  animation: flex 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-@keyframes flex {
-  from {
-    font-stretch: 62%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-mark {
-    animation: none;
-  }
 }
 
 .visually-hidden {
@@ -342,7 +310,7 @@ body.admin :focus-visible {
 
 /* Desktop only: the sidebar folds to an icon strip, labels become tooltips.
    Icons keep their place, so only the words move: they wipe out as the strip
-   narrows, and the wordmark condenses away, then flexes back like the home page */
+   narrows, and the wordmark condenses away, then flexes back */
 @media (min-width: 861px) {
   .shell {
     transition: grid-template-columns 0.28s var(--ease);

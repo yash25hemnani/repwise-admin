@@ -92,6 +92,7 @@ Recent decisions affecting current work:
 | 2026-11-26 | Exercises page: count cards, list and detail split, borderless dialog | quick/20261126-exercise-overview |
 | 2026-11-26 | Hanken Grotesk body text, page fits the window, taller count cards with corner icons | quick/20261126-cards-and-fit |
 | 2026-11-26 | Exercise detail in the right panel on wide screens, new detail layout, email off the top bar | quick/20261126-detail-panel |
+| 2026-11-27 | Plate-colour landing page replaces the wordmark on the public home page | quick/20261127-landing-home |
 
 ## Deferred Items
 

@@ -4,14 +4,343 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Repwise</title>
+  <meta name="description" content="Repwise is a gym app for Android. Plan your week, log every set against last time, and train from a home-screen widget.">
+  <meta name="theme-color" content="#F4F5F3">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,900&display=block">
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <script src="/js/site.js" defer></script>
 </head>
 <body>
-  <main class="home">
-    <h1 class="home-mark">repwise</h1>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="wrap top__row">
+      <a class="top__brand" href="#main">repwise</a>
+      <nav class="top__nav" aria-label="Features">
+        <a href="#widget" style="--dot: var(--red)">Widget</a>
+        <a href="#logging" style="--dot: var(--blue)">Logging</a>
+        <a href="#plan" style="--dot: var(--yellow)">Plan</a>
+        <a href="#library" style="--dot: var(--green)">Library</a>
+        <a href="#progress" style="--dot: var(--paper)">Progress</a>
+      </nav>
+      <a class="btn btn--small" href="https://github.com/yash25hemnani/repwise/releases/latest">Download APK</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="wordmark" aria-hidden="true">repwise</p>
+
+          <svg class="barbell" viewBox="0 0 640 220" aria-hidden="true">
+            <rect class="barbell__steel" x="-3000" y="103" width="3460" height="14" rx="3"/>
+            <rect class="barbell__steel" x="438" y="78" width="18" height="64" rx="3"/>
+            <rect class="barbell__steel" x="456" y="95" width="176" height="30" rx="4"/>
+            <rect class="plate" style="--i:0" x="462" y="10" width="38" height="200" rx="7" fill="#E5534B"/>
+            <rect class="plate" style="--i:1" x="503" y="10" width="32" height="200" rx="7" fill="#2B52EB"/>
+            <rect class="plate" style="--i:2" x="538" y="10" width="27" height="200" rx="7" fill="#F9C356"/>
+            <rect class="plate" style="--i:3" x="568" y="10" width="22" height="200" rx="7" fill="#5DF0A6"/>
+            <rect class="plate" style="--i:4" x="593" y="45" width="18" height="130" rx="6" fill="#FFFFFF"/>
+            <rect class="plate plate--collar" style="--i:5" x="614" y="84" width="11" height="52" rx="3" fill="#000"/>
+          </svg>
+
+          <h1 class="hero__title">Your next set, right on your home screen.</h1>
+          <p class="hero__lede">Repwise is a gym app for Android. Plan your week, log every set against what you did last time, and work through today's session from a widget without opening the app.</p>
+          <div class="hero__actions">
+            <a class="btn" href="https://github.com/yash25hemnani/repwise/releases/latest">Download for Android</a>
+            <a class="link" href="#built">What's built so far</a>
+          </div>
+          <p class="hero__note">Free. Android only for now.</p>
+        </div>
+
+        <figure class="phone-figure">
+          <div class="phone">
+            <div class="phone__screen">
+              <div class="phone__status" aria-hidden="true">
+                <span>07:42</span>
+                <span class="phone__signal"><i></i><i></i><i></i></span>
+              </div>
+              <p class="phone__clock" aria-hidden="true">07:42</p>
+              <div class="widget" id="widget-demo" aria-live="polite">
+                <div class="widget__head"><span>Push day</span><span>1 of 3</span></div>
+                <p class="widget__name">Bench press</p>
+                <ol class="widget__sets">
+                  <li><span>Set 1</span><span>8 × 80 kg</span></li>
+                  <li><span>Set 2</span><span>8 × 80 kg</span></li>
+                  <li><span>Set 3</span><span>8 × 80 kg</span></li>
+                  <li><span>Set 4</span><span>8 × 80 kg</span></li>
+                </ol>
+                <div class="widget__actions">
+                  <button class="wbtn" type="button" data-act="add">Add set</button>
+                  <button class="wbtn wbtn--go" type="button" data-act="done">Mark done</button>
+                </div>
+              </div>
+              <div class="phone__dock" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <figcaption>Widget preview. Try adding a set or marking the exercise done.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="band band--red" id="widget" aria-labelledby="widget-title">
+      <div class="wrap band__grid">
+        <div class="band__text">
+          <div class="band__top">
+            <svg class="plate-face" viewBox="0 0 124 124" style="--c: var(--red); --t: #fff" aria-hidden="true">
+              <circle class="plate-face__shadow" cx="65" cy="65" r="56"/>
+              <circle class="plate-face__rim" cx="60" cy="60" r="56"/>
+              <circle class="plate-face__groove" cx="60" cy="60" r="44"/>
+              <circle class="plate-face__hub" cx="60" cy="60" r="15"/>
+              <circle class="plate-face__bore" cx="60" cy="60" r="6"/>
+              <text class="plate-face__num" x="60" y="39">25</text>
+              <text class="plate-face__unit" x="60" y="95">kg</text>
+            </svg>
+            <span class="tag">Coming</span>
+          </div>
+          <h2 class="band__title" id="widget-title">Train from your home screen</h2>
+          <p>The widget shows the exercise you're on and its sets. Add a set or mark the exercise done right there, and the rest timer starts on its own.</p>
+          <p>It stays in sync with the app both ways, offline too. Tapping it opens the app.</p>
+        </div>
+
+        <div class="states">
+          <div class="mini">
+            <p class="mini__title">No plan yet</p>
+            <p class="mini__sub">Tap to plan your week.</p>
+          </div>
+          <div class="mini">
+            <p class="mini__title">Rest day</p>
+            <p class="mini__sub">Next up: Legs on Thursday.</p>
+          </div>
+          <div class="mini">
+            <p class="mini__title">Session done</p>
+            <p class="mini__sub">6,240 kg lifted in 52 min.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--blue" id="logging" aria-labelledby="logging-title">
+      <div class="wrap band__grid">
+        <div class="band__text">
+          <div class="band__top">
+            <svg class="plate-face" viewBox="0 0 124 124" style="--c: var(--blue); --t: #fff" aria-hidden="true">
+              <circle class="plate-face__shadow" cx="65" cy="65" r="56"/>
+              <circle class="plate-face__rim" cx="60" cy="60" r="56"/>
+              <circle class="plate-face__groove" cx="60" cy="60" r="44"/>
+              <circle class="plate-face__hub" cx="60" cy="60" r="15"/>
+              <circle class="plate-face__bore" cx="60" cy="60" r="6"/>
+              <text class="plate-face__num" x="60" y="39">20</text>
+              <text class="plate-face__unit" x="60" y="95">kg</text>
+            </svg>
+            <span class="tag">Coming</span>
+          </div>
+          <h2 class="band__title" id="logging-title">Log every set against last time</h2>
+          <p>Start today's session from your plan. Each set is filled in with what you did last time, so you only change what moved. A rest timer starts after every set.</p>
+          <p>Sessions save on your phone first and sync when you're back online. Swap or skip an exercise for today, start a session without a plan, and add notes as you go.</p>
+        </div>
+
+        <div class="logging">
+          <div class="card log">
+            <div class="log__head">
+              <p class="log__name">Squat</p>
+              <span class="log__rest">Rest 1:24</span>
+            </div>
+            <p class="log__last">Last time: 5 × 100, 5 × 100, 5 × 102.5 kg</p>
+            <table class="log__table">
+              <thead><tr><th scope="col">Set</th><th scope="col">kg</th><th scope="col">Reps</th><th scope="col"><span class="sr">Done</span></th></tr></thead>
+              <tbody>
+                <tr class="is-done"><td>1</td><td>102.5</td><td>5</td><td><span class="check">✓</span></td></tr>
+                <tr class="is-done"><td>2</td><td>102.5</td><td>5</td><td><span class="check">✓</span></td></tr>
+                <tr class="is-current"><td>3</td><td>102.5</td><td>5</td><td><span class="check check--empty"></span></td></tr>
+                <tr><td>4</td><td>102.5</td><td>5</td><td><span class="check check--empty"></span></td></tr>
+              </tbody>
+            </table>
+            <p class="log__add">+ Add set</p>
+          </div>
+          <div class="card summary">
+            <p class="summary__title">Session done</p>
+            <dl class="summary__list">
+              <div><dt>Volume</dt><dd>8,410 kg</dd></div>
+              <div><dt>Time</dt><dd>1 h 04 min</dd></div>
+            </dl>
+            <ul class="chips chips--tight" aria-label="Muscles hit">
+              <li class="chip">Quads</li><li class="chip">Glutes</li><li class="chip">Hamstrings</li><li class="chip">Core</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--yellow" id="plan" aria-labelledby="plan-title">
+      <div class="wrap band__grid band__grid--stack">
+        <div class="band__text band__text--wide">
+          <div class="band__top">
+            <svg class="plate-face" viewBox="0 0 124 124" style="--c: var(--yellow); --t: #000" aria-hidden="true">
+              <circle class="plate-face__shadow" cx="65" cy="65" r="56"/>
+              <circle class="plate-face__rim" cx="60" cy="60" r="56"/>
+              <circle class="plate-face__groove" cx="60" cy="60" r="44"/>
+              <circle class="plate-face__hub" cx="60" cy="60" r="15"/>
+              <circle class="plate-face__bore" cx="60" cy="60" r="6"/>
+              <text class="plate-face__num" x="60" y="39">15</text>
+              <text class="plate-face__unit" x="60" y="95">kg</text>
+            </svg>
+            <span class="tag">Coming</span>
+          </div>
+          <div class="band__split">
+            <h2 class="band__title" id="plan-title">Plan the week once</h2>
+            <p>Put exercises on the days you train and set the sets, target reps and weight. Leave any day as a rest day. Reorder, edit or remove exercises whenever your program changes.</p>
+          </div>
+        </div>
+
+        <ol class="week" aria-label="Example week">
+          <li class="day day--today"><span class="day__name">Mon</span><span class="day__work">Push</span><span class="day__count">5 exercises</span></li>
+          <li class="day"><span class="day__name">Tue</span><span class="day__work">Pull</span><span class="day__count">5 exercises</span></li>
+          <li class="day day--rest"><span class="day__name">Wed</span><span class="day__work">Rest</span></li>
+          <li class="day"><span class="day__name">Thu</span><span class="day__work">Legs</span><span class="day__count">6 exercises</span></li>
+          <li class="day"><span class="day__name">Fri</span><span class="day__work">Upper</span><span class="day__count">6 exercises</span></li>
+          <li class="day day--rest"><span class="day__name">Sat</span><span class="day__work">Rest</span></li>
+          <li class="day day--rest"><span class="day__name">Sun</span><span class="day__work">Rest</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band band--green" id="library" aria-labelledby="library-title">
+      <div class="wrap band__grid">
+        <div class="band__text">
+          <div class="band__top">
+            <svg class="plate-face" viewBox="0 0 124 124" style="--c: var(--green); --t: #000" aria-hidden="true">
+              <circle class="plate-face__shadow" cx="65" cy="65" r="56"/>
+              <circle class="plate-face__rim" cx="60" cy="60" r="56"/>
+              <circle class="plate-face__groove" cx="60" cy="60" r="44"/>
+              <circle class="plate-face__hub" cx="60" cy="60" r="15"/>
+              <circle class="plate-face__bore" cx="60" cy="60" r="6"/>
+              <text class="plate-face__num" x="60" y="39">10</text>
+              <text class="plate-face__unit" x="60" y="95">kg</text>
+            </svg>
+            <span class="tag">Coming next</span>
+          </div>
+          <h2 class="band__title" id="library-title">Every exercise has a GIF and a how-to</h2>
+          <p>Browse by muscle group, filter by target muscle and equipment, or search by name. Each exercise has a GIF, a step-by-step guide and notes. GIFs are saved on your phone, so they play without signal.</p>
+          <p>Favourite the ones you use, keep your own notes, and add private exercises of your own.</p>
+        </div>
+
+        <div class="card library">
+          <div class="search">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <span>row</span><span class="search__caret" aria-hidden="true"></span>
+          </div>
+          <ul class="chips" aria-label="Muscle groups">
+            <li class="chip chip--on">Back</li><li class="chip">Chest</li><li class="chip">Legs</li><li class="chip">Shoulders</li><li class="chip">Arms</li>
+          </ul>
+          <ul class="results">
+            <li><span class="thumb" aria-hidden="true"></span><span><strong>Barbell bent-over row</strong><small>Lats, barbell</small></span></li>
+            <li><span class="thumb" aria-hidden="true"></span><span><strong>Seated cable row</strong><small>Middle back, cable</small></span></li>
+            <li><span class="thumb" aria-hidden="true"></span><span><strong>Single-arm dumbbell row</strong><small>Lats, dumbbell</small></span></li>
+            <li><span class="thumb" aria-hidden="true"></span><span><strong>Inverted row</strong><small>Upper back, body weight</small></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--white" id="progress" aria-labelledby="progress-title">
+      <div class="wrap band__grid">
+        <div class="band__text">
+          <div class="band__top">
+            <svg class="plate-face plate-face--small" viewBox="0 0 124 124" style="--c: var(--paper); --t: #000" aria-hidden="true">
+              <circle class="plate-face__shadow" cx="65" cy="65" r="56"/>
+              <circle class="plate-face__rim" cx="60" cy="60" r="56"/>
+              <circle class="plate-face__groove" cx="60" cy="60" r="44"/>
+              <circle class="plate-face__hub" cx="60" cy="60" r="15"/>
+              <circle class="plate-face__bore" cx="60" cy="60" r="6"/>
+              <text class="plate-face__num" x="60" y="39">5</text>
+              <text class="plate-face__unit" x="60" y="95">kg</text>
+            </svg>
+            <span class="tag">Coming</span>
+          </div>
+          <h2 class="band__title" id="progress-title">See what's getting stronger</h2>
+          <p>Every session is kept with all its sets. Each exercise shows its full history and personal best, with charts for weight and volume.</p>
+          <p>Weekly stats count your workouts, streak and total volume. Muscle coverage shows what your plan works and what you've actually hit this week.</p>
+        </div>
+
+        <div class="progress">
+          <div class="card chart">
+            <div class="chart__head">
+              <p class="chart__name">Bench press</p>
+              <p class="chart__sub">Best set, last 8 weeks</p>
+            </div>
+            <svg class="chart__svg" viewBox="0 0 360 160" role="img" aria-label="Bench press best set rising from 72.5 kg to 85 kg over 8 weeks">
+              <line x1="20" y1="140" x2="340" y2="140" class="chart__grid"/>
+              <line x1="20" y1="80" x2="340" y2="80" class="chart__grid chart__grid--dash"/>
+              <polyline class="chart__line" points="20,122.9 65.7,105.7 111.4,105.7 157.1,88.6 202.9,71.4 248.6,71.4 294.3,54.3 340,37.1"/>
+              <g class="chart__dots">
+                <circle cx="20" cy="122.9" r="4"/><circle cx="65.7" cy="105.7" r="4"/><circle cx="111.4" cy="105.7" r="4"/><circle cx="157.1" cy="88.6" r="4"/>
+                <circle cx="202.9" cy="71.4" r="4"/><circle cx="248.6" cy="71.4" r="4"/><circle cx="294.3" cy="54.3" r="4"/>
+              </g>
+              <circle class="chart__best" cx="340" cy="37.1" r="8"/>
+              <text class="chart__label" x="326" y="22" text-anchor="end">85 kg, new best</text>
+            </svg>
+          </div>
+
+          <dl class="card stats">
+            <div><dt>Workouts</dt><dd>4</dd></div>
+            <div><dt>Streak</dt><dd>6 wk</dd></div>
+            <div><dt>Volume</dt><dd>21,400 kg</dd></div>
+          </dl>
+
+          <div class="card coverage">
+            <table class="coverage__table">
+              <caption>Muscles this week</caption>
+              <thead><tr><th scope="col"><span class="sr">Muscle</span></th><th scope="col">Planned</th><th scope="col">Hit</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Chest</th><td><span class="dot dot--plan">yes</span></td><td><span class="dot dot--hit">yes</span></td></tr>
+                <tr><th scope="row">Back</th><td><span class="dot dot--plan">yes</span></td><td><span class="dot dot--hit">yes</span></td></tr>
+                <tr><th scope="row">Quads</th><td><span class="dot dot--plan">yes</span></td><td><span class="dot">not yet</span></td></tr>
+                <tr><th scope="row">Calves</th><td><span class="dot">no</span></td><td><span class="dot">no</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--dark" id="built" aria-labelledby="built-title">
+      <div class="wrap band__grid band__grid--top">
+        <div class="band__text">
+          <h2 class="band__title" id="built-title">Get Repwise for Android</h2>
+          <p>Download the APK from GitHub and install it. After that, updates install from inside the app, and your data stays where it is.</p>
+          <p>Sign in with Google, or with your email and a password.</p>
+          <div class="hero__actions">
+            <a class="btn" href="https://github.com/yash25hemnani/repwise/releases/latest">Download the APK</a>
+            <a class="link" href="https://github.com/yash25hemnani/repwise/releases">Release notes</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="roadmap__title">What's built so far</h3>
+          <ol class="roadmap">
+            <li class="is-now"><span><span class="roadmap__name">Accounts and updates</span><span class="roadmap__detail">Sign-in, light and dark mode, in-app updates</span></span><span class="status status--now">Out now</span></li>
+            <li class="is-wip"><span><span class="roadmap__name">Exercise library</span><span class="roadmap__detail">Browse, filter and search, with GIFs</span></span><span class="status status--wip">In progress</span></li>
+            <li><span><span class="roadmap__name">Weekly plan and logging</span><span class="roadmap__detail">Offline sessions, rest timer, summaries</span></span><span class="status">Coming</span></li>
+            <li><span><span class="roadmap__name">Home-screen widget</span><span class="roadmap__detail">Train today's session from the widget</span></span><span class="status">Coming</span></li>
+            <li><span><span class="roadmap__name">Flexible sessions</span><span class="roadmap__detail">Swaps, ad-hoc sessions, favourites, your own exercises</span></span><span class="status">Coming</span></li>
+            <li><span><span class="roadmap__name">Progress</span><span class="roadmap__detail">History, personal bests, charts, muscle coverage</span></span><span class="status">Coming</span></li>
+          </ol>
+          <p class="roadmap__after">After that: protein tracking, trainers, iPhone and the Play Store.</p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="foot">
+    <div class="wrap foot__row">
+      <span>© 2026 Repwise</span>
+      <a href="https://github.com/yash25hemnani/repwise/releases">Releases on GitHub</a>
+    </div>
+  </footer>
 </body>
 </html>
