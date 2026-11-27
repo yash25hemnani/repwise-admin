@@ -93,6 +93,8 @@ Recent decisions affecting current work:
 | 2026-11-26 | Hanken Grotesk body text, page fits the window, taller count cards with corner icons | quick/20261126-cards-and-fit |
 | 2026-11-26 | Exercise detail in the right panel on wide screens, new detail layout, email off the top bar | quick/20261126-detail-panel |
 | 2026-11-27 | Plate-colour landing page replaces the wordmark on the public home page | quick/20261127-landing-home |
+| 2026-11-27 | Admin reskinned to the landing design: chalk, Archivo, ink outlines, hard shadows, plate nav | quick/20261127-admin-plate-reskin |
+| 2026-11-27 | Blue primary, the app's logo in the sidebar and sign-in, light only | quick/20261127-admin-blue-logo |
 
 ## Deferred Items
 

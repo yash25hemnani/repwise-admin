@@ -1,0 +1,18 @@
+<%# The app's logo (../repwise/assets/icons/repwise_logo.svg), inline so the ring text gets Archivo %>
+<svg class="<%= locals.cls || '' %>" viewBox="0 0 120 120" aria-hidden="true">
+  <defs>
+    <path id="logo-ring" d="M 26 60 A 34 34 0 1 1 94 60 A 34 34 0 1 1 26 60"/>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="#2B52EB"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.25"/>
+  <circle cx="60" cy="60" r="14" fill="#F4F5F3"/>
+  <circle cx="60" cy="60" r="5.5" fill="#000000"/>
+  <text fill="#FFFFFF" font-family="Archivo" font-weight="900" font-size="18" letter-spacing="0.5">
+    <textPath href="#logo-ring" startOffset="25%" text-anchor="middle">REPWISE</textPath>
+  </text>
+  <text fill="#FFFFFF" font-family="Archivo" font-weight="900" font-size="18" letter-spacing="0.5">
+    <textPath href="#logo-ring" startOffset="75%" text-anchor="middle">REPWISE</textPath>
+  </text>
+  <circle cx="20" cy="60" r="2.5" fill="#FFFFFF"/>
+  <circle cx="100" cy="60" r="2.5" fill="#FFFFFF"/>
+</svg>

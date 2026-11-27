@@ -1,14 +1,26 @@
-/* Dark only. Tokens match ../repwise/lib/core/theme/app_colors.dart */
+/* Light only, the landing page's look: ink outlines, hard shadows and plate
+   colours. Tokens match the app's light palette in app_colors.dart */
 :root {
-  color-scheme: dark;
-  --bg: #000000;
-  --surface: #1C1C1F;
-  --border: #2A2A2E;
-  --text: #FFFFFF;
-  --text-2: #A1A1A8;
-  --green: #5DF0A6;
-  --on-green: #000000;
+  color-scheme: light;
   --red: #E5534B;
+  --blue: #2B52EB;
+  --yellow: #F9C356;
+  --green: #5DF0A6;
+  --steel: #B4B8B2;
+  --black: #000000;
+  --primary: var(--blue);
+  --on-primary: #FFFFFF;
+  --chalk: #F4F5F3;
+  --paper: #FFFFFF;
+  --hover: #E6E8E5;
+  --ink: #000000;
+  --ink-soft: #5C6066;
+  --rule: #D5D8D4;
+  --primary-text: var(--blue);
+  --red-text: #C7362F;
+  --scrim: rgb(0 0 0 / 0.45);
+  --line: 3px solid var(--ink);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
@@ -17,45 +29,47 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Hanken Grotesk', system-ui, sans-serif;
-  font-size: 15px;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-size: 16px;
   line-height: 1.5;
 }
 
 :focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 2px;
+  outline: 3px solid var(--primary-text);
+  outline-offset: 3px;
 }
 
+/* Sinks into its shadow when pressed, as on the landing page */
 .button {
   display: block;
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
+  padding: 13px 18px;
+  border: var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
   font: inherit;
-  font-weight: 500;
+  font-weight: 800;
+  box-shadow: 4px 4px 0 var(--ink);
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .button:hover:not(:disabled) {
-  border-color: var(--text-2);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.button:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 .button-primary {
-  border-color: var(--green);
-  background: var(--green);
-  color: var(--on-green);
-  font-weight: 700;
-}
-
-.button-primary:hover:not(:disabled) {
-  border-color: var(--green);
-  filter: brightness(1.08);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .button-icon {
@@ -80,42 +94,50 @@ body {
 
 .login-panel {
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
+}
+
+/* The app's logo, as the app draws it */
+.login-logo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 22px;
 }
 
 /* The repwise mark, sized to the form column */
 .wordmark {
   margin: 0;
   text-align: center;
-  font-family: 'Archivo', sans-serif;
   font-weight: 900;
   font-stretch: 125%;
-  font-size: clamp(44px, 13vw, 60px);
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-size: clamp(48px, 14vw, 68px);
+  line-height: 0.85;
+  letter-spacing: -0.035em;
 }
 
 .lede {
-  margin: 12px 0 40px;
+  margin: 16px 0 36px;
   text-align: center;
-  color: var(--text-2);
+  color: var(--ink-soft);
 }
 
 .divider {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 20px 0;
-  color: var(--text-2);
-  font-size: 13px;
+  margin: 22px 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .divider::before,
 .divider::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: var(--border);
+  height: 2px;
+  background: var(--rule);
 }
 
 .form {
@@ -124,32 +146,28 @@ body {
 }
 
 .form label {
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .form input {
-  margin-bottom: 12px;
-  padding: 11px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  border: var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
   font: inherit;
 }
 
-.form input:focus-visible {
-  border-color: var(--green);
-  outline-offset: 0;
-}
-
 .form .button {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .message {
-  margin: 20px 0 0;
+  margin: 22px 0 0;
   text-align: center;
-  color: var(--red);
+  color: var(--red-text);
+  font-weight: 600;
 }
 
 .visually-hidden {
@@ -161,36 +179,7 @@ body {
   white-space: nowrap;
 }
 
-/* Admin pages, tokens from .planning/DESIGN.md. Black panels with grey lines;
-   grey fills only for the count cards and the dialog. Mint is action, violet is location */
-body.admin {
-  --frame: #000000;
-  --bg: #000000;
-  --panel: #000000;
-  --tile: #000000;
-  --card: #161618;
-  --text: #FFFFFF;
-  --text-2: #9BA0A8;
-  --neon: #5DF0A6;
-  --line: #2A2A2E;
-  --line-2: #3A3A40;
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --accent: #5DF0A6;
-  --ink: #000000;
-  --side-text: #9BA0A8;
-  /* Secondary: where you are (focus, hover, the open row) */
-  --violet: #8B53FE;
-  --hover: rgb(139 83 254 / 0.14);
-  --selected: rgb(139 83 254 / 0.3);
-  background: var(--frame);
-  color: var(--text);
-}
-
-body.admin :focus-visible {
-  outline-color: var(--violet);
-}
-
-/* The sidebar, split from the page by a grey line */
+/* The sidebar is a paper strip ruled off from the chalk page */
 .shell {
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
@@ -206,14 +195,10 @@ body.admin :focus-visible {
   gap: 36px;
   height: 100vh;
   height: 100svh;
-  padding: 28px 13px 20px;
-  border-right: 1px solid var(--line);
-  background: var(--frame);
-  color: var(--side-text);
-}
-
-.sidebar :focus-visible {
-  outline-color: var(--accent);
+  padding: 28px 12px 20px 11px;
+  border-right: var(--line);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .sidebar-head {
@@ -221,7 +206,7 @@ body.admin :focus-visible {
   align-items: center;
   gap: 8px;
   min-height: 40px;
-  padding-left: 14px;
+  padding-left: 8px;
 }
 
 .sidebar-toggle,
@@ -235,12 +220,12 @@ body.admin :focus-visible {
   border: 0;
   border-radius: 10px;
   background: none;
-  color: var(--side-text);
+  box-shadow: none;
+  color: var(--ink);
 }
 
 .sidebar .sidebar-toggle:hover {
   background: var(--hover);
-  color: #FFFFFF;
 }
 
 .toggle-pane {
@@ -252,20 +237,29 @@ body.admin :focus-visible {
   display: none;
 }
 
-/* The block padding keeps the descender inside the clip */
+/* The logo lines up over the nav discs. The block padding keeps the
+   descender inside the clip */
 .sidebar-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   min-width: 0;
   overflow: hidden;
   padding-block: 6px;
-  color: #FFFFFF;
-  font-family: 'Archivo', sans-serif;
+  color: var(--ink);
   font-weight: 900;
   font-stretch: 125%;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1;
   letter-spacing: -0.02em;
   white-space: nowrap;
   text-decoration: none;
+}
+
+.sidebar-mark svg {
+  flex: none;
+  width: 30px;
+  height: 30px;
 }
 
 .nav {
@@ -278,30 +272,42 @@ body.admin :focus-visible {
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px;
   border: 0;
   border-radius: 999px;
   background: none;
   color: inherit;
   font: inherit;
-  font-weight: 500;
+  font-weight: 700;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
 }
 
+/* Each icon sits in a ringed disc; the current page's disc is primary blue */
 .nav-item svg {
   flex: none;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+.nav-item[aria-current="page"] svg {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .nav-item:hover {
   background: var(--hover);
-  color: #FFFFFF;
 }
 
 .nav-item[aria-current="page"] {
-  background: var(--accent);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .sidebar-foot {
@@ -325,7 +331,7 @@ body.admin :focus-visible {
   }
 
   .sidebar-mark {
-    max-width: 160px;
+    max-width: 170px;
     transition: opacity 0.2s ease 0.1s, font-stretch 0.45s var(--ease) 0.05s, max-width 0.28s var(--ease);
   }
 
@@ -355,7 +361,7 @@ body.admin :focus-visible {
     grid-template-columns: 72px minmax(0, 1fr);
   }
 
-  /* 72px strip less 13px padding each side leaves 46px: the toggle centres in it */
+  /* 72px strip less 23px padding and the 3px rule leaves 46px: the toggle centres in it */
   .is-collapsed .sidebar-head {
     gap: 0;
     padding: 0 3px 0 0;
@@ -390,12 +396,11 @@ body.admin :focus-visible {
     top: 50%;
     left: calc(100% + 24px);
     padding: 6px 12px;
-    border: 1px solid var(--line);
     border-radius: 999px;
-    background: var(--frame);
-    color: var(--text);
-    font-size: 12px;
-    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    font-weight: 700;
     white-space: nowrap;
     pointer-events: none;
     visibility: hidden;
@@ -426,22 +431,24 @@ body.admin :focus-visible {
   flex-direction: column;
   min-width: 0;
   padding: 0 32px 40px;
-  background: var(--bg);
+  background: var(--chalk);
 }
 
 .topbar {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 24px 0 20px;
+  padding: 26px 0 22px;
 }
 
 .topbar-title {
   min-width: 0;
   margin: 0 auto 0 0;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.1;
+  font-size: 30px;
+  font-weight: 900;
+  font-stretch: 118%;
+  line-height: 1;
+  letter-spacing: -0.025em;
 }
 
 .icon-button {
@@ -451,17 +458,17 @@ body.admin :focus-visible {
   width: 40px;
   height: 40px;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--panel);
-  color: var(--text);
+  border: var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
   cursor: pointer;
 }
 
 .icon-button:hover {
   background: var(--hover);
 }
-
 .menu-button,
 .scrim,
 .sidebar .sidebar-close {
@@ -483,57 +490,68 @@ body.admin :focus-visible {
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  background: var(--text);
-  color: var(--bg);
-  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 900;
 }
 
 .content {
   flex: 1;
 }
 
+/* A paper card with an ink outline and a hard shadow */
 .panel {
   max-width: 960px;
   padding: 28px;
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  background: var(--panel);
+  border: var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 
 .panel-title {
   margin: 0 0 8px;
-  font-size: 19px;
-  font-weight: 500;
-  line-height: 1.3;
+  font-size: 22px;
+  font-weight: 800;
+  font-stretch: 110%;
+  line-height: 1.2;
 }
 
 .panel-text {
   max-width: 60ch;
-  margin: 0 0 20px;
-  color: var(--text-2);
+  margin: 0 0 22px;
+  color: var(--ink-soft);
 }
 
 .pill-link {
   display: inline-block;
-  padding: 9px 20px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--ink);
-  font-weight: 500;
+  padding: 11px 20px;
+  border: var(--line);
+  border-radius: 14px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 800;
   text-decoration: none;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .pill-link:hover {
-  text-decoration: underline;
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
-/* Library counts: mint for the total, grey for the lists. Numbers in the
-   wordmark's face so they read as the brand's, not a table's */
+.pill-link:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* Library counts: primary blue for the total, paper for the lists */
 .stats {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0 0 20px;
+  gap: 16px;
+  margin: 0 0 24px;
 }
 
 /* Label top left, number bottom left, a big line icon in the bottom right */
@@ -545,25 +563,26 @@ body.admin :focus-visible {
   gap: 12px;
   min-width: 0;
   min-height: 112px;
-  padding: 16px 20px 18px;
+  padding: 14px 18px 16px;
   overflow: hidden;
+  border: var(--line);
   border-radius: 20px;
-  background: var(--card);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
 .stat dt {
   position: relative;
   overflow: hidden;
-  color: var(--text-2);
+  color: var(--ink-soft);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .stat dd {
   margin: 0;
-  font-family: 'Archivo', sans-serif;
   font-weight: 900;
   font-stretch: 125%;
   font-size: 34px;
@@ -578,32 +597,32 @@ body.admin :focus-visible {
 
 .stat-icon {
   position: absolute;
-  right: 14px;
-  bottom: 12px;
+  right: 12px;
+  bottom: 10px;
   width: 56px;
   height: 56px;
-  color: rgb(255 255 255 / 0.14);
+  color: color-mix(in srgb, var(--ink) 12%, transparent);
   pointer-events: none;
 }
 
 .stat-total {
-  background: var(--neon);
-  color: var(--ink);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .stat-total dt {
-  color: rgb(0 0 0 / 0.66);
+  color: var(--on-primary);
 }
 
 .stat-total .stat-icon {
-  color: rgb(0 0 0 / 0.2);
+  color: color-mix(in srgb, var(--on-primary) 30%, transparent);
 }
 
 /* List on the left, the exercise on the right; the right card spans search and list */
 .split {
   display: grid;
   grid-template-columns: minmax(340px, 5fr) minmax(0, 7fr);
-  gap: 20px;
+  gap: 24px;
 }
 
 .split-list {
@@ -625,8 +644,8 @@ body.admin :focus-visible {
   justify-content: center;
   gap: 16px;
   padding: 32px;
-  border: 1.5px dashed var(--line-2);
-  border-radius: 28px;
+  border: 3px dashed var(--ink-soft);
+  border-radius: 22px;
   text-align: center;
 }
 
@@ -635,15 +654,17 @@ body.admin :focus-visible {
   place-items: center;
   width: 56px;
   height: 56px;
+  border: var(--line);
   border-radius: 999px;
-  background: var(--hover);
-  color: var(--violet);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
 .side-empty p {
   max-width: 28ch;
   margin: 0;
-  color: var(--text-2);
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .split-side [hidden] {
@@ -653,21 +674,22 @@ body.admin :focus-visible {
 /* Framed like the list: the outline holds still and the exercise scrolls
    inside it, with the scrollbar kept clear of the corners */
 .side-detail {
-  --surface: var(--panel);
+  --surface: var(--paper);
   display: flex;
   flex: 1;
   flex-direction: column;
   min-width: 0;
   padding: 12px 4px 12px 0;
-  border: 1px solid var(--line);
-  border-radius: 28px;
+  border: var(--line);
+  border-radius: 22px;
   background: var(--surface);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 
 .side-scroll {
   padding: 0 20px 16px 28px;
   scrollbar-width: thin;
-  scrollbar-color: var(--line-2) transparent;
+  scrollbar-color: var(--steel) transparent;
 }
 
 .side-detail .detail-head {
@@ -678,7 +700,7 @@ body.admin :focus-visible {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .search-field {
@@ -691,8 +713,8 @@ body.admin :focus-visible {
 .search-icon {
   position: absolute;
   top: 50%;
-  left: 18px;
-  color: var(--text-2);
+  left: 16px;
+  color: var(--ink);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -700,28 +722,25 @@ body.admin :focus-visible {
 .search input {
   flex: 1;
   min-width: 0;
-  padding: 11px 20px 11px 46px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--panel);
-  color: var(--text);
+  padding: 10px 16px 10px 44px;
+  border: var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
   font: inherit;
-}
-
-/* The violet edge is the focus ring, so the global outline would double it */
-.search input:focus,
-.search input:focus-visible {
-  border-color: var(--violet);
-  outline: none;
+  font-weight: 600;
 }
 
 .search input::placeholder {
-  color: var(--text-2);
+  color: var(--ink-soft);
+  font-weight: 400;
 }
 
 .search-clear {
-  color: var(--text-2);
-  font-weight: 500;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
 /* The outline is the frame and the list scrolls inside it, so the scrollbar
@@ -729,10 +748,11 @@ body.admin :focus-visible {
 .list-panel {
   display: flex;
   flex-direction: column;
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 28px;
-  background: var(--panel);
+  padding: 10px;
+  border: var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 
 /* Standard scrollbar properties, not ::-webkit-scrollbar: a custom webkit
@@ -740,7 +760,7 @@ body.admin :focus-visible {
 .list-scroll {
   min-height: 0;
   scrollbar-width: thin;
-  scrollbar-color: var(--line-2) transparent;
+  scrollbar-color: var(--steel) transparent;
 }
 
 /* Wide screens: the page fits the window and only the list scrolls */
@@ -791,7 +811,7 @@ body.admin :focus-visible {
   /* contain: reaching the end doesn't hand the scroll on to the page */
   .main-fit .list-scroll {
     flex: 1;
-    padding-right: 8px;
+    padding-right: 6px;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -820,7 +840,7 @@ body.admin :focus-visible {
 
   .split-side.is-open {
     display: flex;
-    margin-top: 20px;
+    margin-top: 24px;
   }
 }
 
@@ -828,7 +848,7 @@ body.admin :focus-visible {
 .list-count {
   margin: 0;
   padding: 12px;
-  color: var(--text-2);
+  color: var(--ink-soft);
 }
 
 .list-message {
@@ -845,13 +865,14 @@ body.admin :focus-visible {
   scroll-margin-top: 16px;
 }
 
+/* The open row takes the primary blue with an ink ring; inset, so nothing shifts */
 .row {
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 14px;
   padding: 6px 14px 6px 6px;
-  border-radius: 18px;
+  border-radius: 14px;
   color: inherit;
   text-decoration: none;
 }
@@ -861,7 +882,9 @@ body.admin :focus-visible {
 }
 
 .row[aria-current="true"] {
-  background: var(--selected);
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: inset 0 0 0 2px var(--ink);
 }
 
 .row-text {
@@ -871,14 +894,18 @@ body.admin :focus-visible {
 
 .row-name {
   overflow: hidden;
-  font-weight: 500;
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .row-group {
-  color: var(--text-2);
-  font-size: 12px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.row[aria-current="true"] .row-group {
+  color: var(--on-primary);
 }
 
 /* Stills flip: frame 2 sits on frame 1 and shows only while the admin points at the row */
@@ -887,9 +914,9 @@ body.admin :focus-visible {
   width: 48px;
   height: 48px;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--tile);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--hover);
 }
 
 .thumb img {
@@ -912,50 +939,57 @@ body.admin :focus-visible {
 
 .gif-mark {
   position: absolute;
-  right: 3px;
-  bottom: 3px;
+  right: 2px;
+  bottom: 2px;
   padding: 0 5px;
   border-radius: 999px;
-  background: #000000;
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 18px;
+  background: var(--black);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 17px;
 }
 
 .load-more {
   display: inline-block;
-  margin: 12px 6px 6px;
-  padding: 9px 20px;
-  border: 1px solid var(--text);
-  border-radius: 999px;
-  color: var(--text);
-  font-weight: 500;
+  margin: 12px 6px 10px;
+  padding: 8px 16px;
+  border: var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 800;
   text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .load-more:hover {
-  background: var(--text);
-  color: var(--panel);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.load-more:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 .row[aria-busy="true"] {
   opacity: 0.6;
 }
 
-/* The exercise opens on a raised grey sheet over a dimmed, blurred page.
-   A faint white hairline gives it an edge; the black tiles inside sit in it like wells */
+/* The exercise opens on a paper card over a dimmed page */
 .detail {
-  --surface: var(--card);
+  --surface: var(--paper);
   width: min(880px, calc(100vw - 32px));
   max-width: none;
   max-height: calc(100svh - 32px);
   padding: 0;
-  border: 0;
-  border-radius: 28px;
-  background: var(--card);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07), 0 32px 80px rgb(0 0 0 / 0.7);
-  color: var(--text);
+  border: var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: 8px 8px 0 var(--ink);
+  color: var(--ink);
   overflow-y: auto;
 }
 
@@ -971,8 +1005,7 @@ body.admin :focus-visible {
 }
 
 .detail::backdrop {
-  background: rgb(0 0 0 / 0.72);
-  backdrop-filter: blur(4px);
+  background: var(--scrim);
 }
 
 .detail-body {
@@ -985,17 +1018,18 @@ body.admin :focus-visible {
   place-items: center;
   width: 40px;
   height: 40px;
+  border: 2px solid var(--ink);
   border-radius: 999px;
-  background: none;
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-size: 24px;
   line-height: 1;
   text-decoration: none;
 }
 
 .detail-close:hover {
-  background: var(--accent);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 /* Stays put while the steps scroll under it */
@@ -1018,10 +1052,11 @@ body.admin :focus-visible {
 
 .detail-name {
   margin: 0;
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: 32px;
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
@@ -1029,14 +1064,15 @@ body.admin :focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 16px;
-  margin: 8px 0 0;
-  color: var(--text-2);
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .detail-empty {
   max-width: 40ch;
   margin: 0;
-  color: var(--text-2);
+  color: var(--ink-soft);
 }
 
 .media {
@@ -1051,9 +1087,9 @@ body.admin :focus-visible {
   position: relative;
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--tile);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: var(--chalk);
 }
 
 .media-tile img {
@@ -1089,14 +1125,14 @@ body.admin :focus-visible {
 
 .preview figcaption {
   position: absolute;
-  left: 12px;
-  bottom: 12px;
+  left: 10px;
+  bottom: 10px;
   padding: 3px 10px;
   border-radius: 999px;
-  background: var(--panel);
-  color: var(--text);
+  background: var(--ink);
+  color: var(--paper);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .media-gif {
@@ -1113,10 +1149,9 @@ body.admin :focus-visible {
   place-items: center;
   min-height: 160px;
   margin-bottom: 12px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--tile);
-  color: var(--text-2);
+  border: 3px dashed var(--ink-soft);
+  border-radius: 14px;
+  color: var(--ink-soft);
 }
 
 .media-empty p {
@@ -1125,12 +1160,11 @@ body.admin :focus-visible {
 
 .detail-label {
   margin: 0 0 12px;
-  color: var(--text-2);
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 800;
 }
 
-/* The target is the solid pill; the rest are outlined */
+/* The target is the solid ink pill; the rest are outlined */
 .works {
   display: flex;
   align-items: baseline;
@@ -1154,16 +1188,18 @@ body.admin :focus-visible {
 }
 
 .chip {
-  padding: 5px 14px;
-  border: 1px solid var(--line-2);
+  padding: 4px 12px;
+  border: 2px solid var(--ink);
   border-radius: 999px;
+  background: var(--paper);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .chip-target {
-  border-color: var(--text);
-  background: var(--text);
-  color: var(--bg);
-  font-weight: 600;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
 }
 
 .facts {
@@ -1174,13 +1210,14 @@ body.admin :focus-visible {
 }
 
 .facts dt {
-  color: var(--text-2);
+  color: var(--ink-soft);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .facts dd {
   margin: 0;
+  font-weight: 700;
 }
 
 .level-value {
@@ -1201,7 +1238,7 @@ body.admin :focus-visible {
   width: 4px;
   height: 8px;
   border-radius: 2px;
-  background: var(--line-2);
+  background: var(--rule);
 }
 
 .level i:nth-child(2) {
@@ -1213,7 +1250,7 @@ body.admin :focus-visible {
 }
 
 .level i.on {
-  background: var(--text);
+  background: var(--ink);
 }
 
 .steps {
@@ -1234,7 +1271,6 @@ body.admin :focus-visible {
 
 .steps li::before {
   content: counter(step);
-  font-family: 'Archivo', sans-serif;
   font-weight: 900;
   font-stretch: 125%;
   font-variant-numeric: tabular-nums;
@@ -1246,8 +1282,8 @@ body.admin :focus-visible {
   gap: 4px 20px;
   margin: 28px 0 0;
   padding-top: 16px;
-  border-top: 1px solid var(--line);
-  color: var(--text-2);
+  border-top: 2px solid var(--rule);
+  color: var(--ink-soft);
   font-size: 13px;
 }
 
@@ -1258,6 +1294,12 @@ body.admin :focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .detail[open] {
     animation: none;
+  }
+
+  .button,
+  .pill-link,
+  .load-more {
+    transition: none;
   }
 
   .row:hover .frame-1,
@@ -1303,7 +1345,7 @@ body.admin :focus-visible {
 
   .sidebar .sidebar-close {
     display: grid;
-    color: #FFFFFF;
+    box-shadow: none;
   }
 
   .sidebar .sidebar-toggle {
@@ -1316,7 +1358,7 @@ body.admin :focus-visible {
     position: fixed;
     inset: 0;
     z-index: 9;
-    background: rgb(0 0 0 / 0.5);
+    background: var(--scrim);
   }
 
   .menu-open {
@@ -1338,7 +1380,7 @@ body.admin :focus-visible {
   }
 
   .topbar-title {
-    font-size: 19px;
+    font-size: 24px;
   }
 }
 
@@ -1353,6 +1395,7 @@ body.admin :focus-visible {
 @media (max-width: 600px) {
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .stat {
@@ -1373,7 +1416,9 @@ body.admin :focus-visible {
     width: 100vw;
     height: 100svh;
     max-height: none;
+    border: 0;
     border-radius: 0;
+    box-shadow: none;
   }
 
   .detail-body {
@@ -1385,7 +1430,7 @@ body.admin :focus-visible {
   }
 
   .detail-name {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   .works {

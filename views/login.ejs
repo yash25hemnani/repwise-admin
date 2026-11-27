@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
   <title>Sign in · Repwise admin</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,900&family=Hanken+Grotesk:wght@400..700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
   <link rel="stylesheet" href="/css/app.css">
   <script type="module" src="/js/login.js"></script>
 </head>
 <body>
   <main class="login">
     <div class="login-panel">
+      <%- include('partials/logo', { cls: 'login-logo' }) %>
       <h1 class="wordmark">repwise</h1>
       <p class="lede">Admin sign-in for the exercise library.</p>
 
